@@ -13,32 +13,45 @@ namespace TestGenerator;
 
 public partial class MainWindow : Window
 {
+    public static Random random = new Random();
+
     public MainWindow()
     {
         InitializeComponent();
-        LoadSampleDirectoryTree();
+        ProjectTreeView.Items.Clear();
+        ProjectTreeView.Items.Add(LoadSampleDirectoryTree());
     }
 
-    private void LoadSampleDirectoryTree()
+    private TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
     {
-        var root = new TreeViewItem { Header = "MyProject" };
+        var numSubElements = 0;
+        var name = $"File {depth}:{random.Next(100)}.cs";
+        
+        if (depth < maxDepth)
+        {
+            numSubElements = random.Next(2) == 1 ? random.Next(maxPerLevel) : 0;
+            name = numSubElements > 0 ? $"Folder {depth}:{random.Next(10)}" : $"File {depth}:{random.Next(100)}.cs";
+        }
+        if (depth == 0)
+        {
+            name = "Project";
+            numSubElements = 5;
+        }
 
-        var controllers = new TreeViewItem { Header = "Controllers" };
-        controllers.Items.Add(new TreeViewItem { Header = "HomeController.cs" });
-        controllers.Items.Add(new TreeViewItem { Header = "AccountController.cs" });
+        var root = CreateTreeItem(name);
 
-        var models = new TreeViewItem { Header = "Models" };
-        models.Items.Add(new TreeViewItem { Header = "User.cs" });
+        if (numSubElements <= 0) return root;
 
-        var services = new TreeViewItem { Header = "Services" };
-        services.Items.Add(new TreeViewItem { Header = "EmailService.cs" });
+        for (var i = 0; i < numSubElements; i++)
+        {
+            root.Items.Add(LoadSampleDirectoryTree(depth + 1, maxDepth, maxPerLevel));
+        }
 
-        root.Items.Add(controllers);
-        root.Items.Add(models);
-        root.Items.Add(services);
-        root.Items.Add(new TreeViewItem { Header = "Program.cs" });
+        return root;
+    }
 
-        ProjectTreeView.Items.Clear();
-        ProjectTreeView.Items.Add(root);
+    private TreeViewItem CreateTreeItem(string name)
+    {
+        return new TreeViewItem() { Header = new CheckBox() { Content = name } }; ;
     }
 }

@@ -65,19 +65,7 @@
                         </Grid>
                         <GroupBox Header="Project Overview" Grid.Column="1">
                             <TreeView x:Name="ProjectTreeView">
-                                <TreeView.Resources>
-                                    <Style TargetType="TreeViewItem">
-                                        <Setter Property="HeaderTemplate">
-                                            <Setter.Value>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <CheckBox Content="{Binding}" />
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </TreeView.Resources>
+
                             </TreeView >
                         </GroupBox>
                     </Grid>
