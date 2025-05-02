@@ -21,7 +21,6 @@
       <Folder Include="CLI\" />
       <Folder Include="Core\Configuration\" />
       <Folder Include="Core\Generation\" />
-      <Folder Include="Core\Scanning\" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,7 @@
-﻿using System.Text;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TestGenerator.Core.Scanning;
 
 namespace TestGenerator;
 
@@ -20,6 +14,7 @@ public partial class MainWindow : Window
         InitializeComponent();
         ProjectTreeView.Items.Clear();
         ProjectTreeView.Items.Add(LoadSampleDirectoryTree());
+        Scanner.LogFolderStructure(@"D:\Repositories\EvoSim\EvoSim", logTextBlock: LogText);
     }
 
     private static TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)

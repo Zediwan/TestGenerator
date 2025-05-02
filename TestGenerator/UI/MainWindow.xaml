@@ -72,7 +72,9 @@
                     <ScrollViewer x:Name="LogWindow"
                                   Background="LightGray"
                                   VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto" />
+                                  HorizontalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="LogText" TextWrapping="Wrap" />
+                    </ScrollViewer>
                 </GroupBox>
             </Grid>
         </TabItem>
