@@ -13,7 +13,7 @@ namespace TestGenerator;
 
 public partial class MainWindow : Window
 {
-    public static Random random = new Random();
+    private static readonly Random Random = new Random();
 
     public MainWindow()
     {
@@ -25,12 +25,12 @@ public partial class MainWindow : Window
     private TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
     {
         var numSubElements = 0;
-        var name = $"File {depth}:{random.Next(100)}.cs";
+        var name = $"File {depth}:{Random.Next(100)}.cs";
         
         if (depth < maxDepth)
         {
-            numSubElements = random.Next(2) == 1 ? random.Next(maxPerLevel) : 0;
-            name = numSubElements > 0 ? $"Folder {depth}:{random.Next(10)}" : $"File {depth}:{random.Next(100)}.cs";
+            numSubElements = Random.Next(2) == 1 ? Random.Next(maxPerLevel) : 0;
+            name = numSubElements > 0 ? $"Folder {depth}:{Random.Next(10)}" : $"File {depth}:{Random.Next(100)}.cs";
         }
         if (depth == 0)
         {
