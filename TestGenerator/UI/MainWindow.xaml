@@ -5,83 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Test Generator" Height="450" Width="800">
-    <Grid Background="LightGray">
-        <TabControl>
-            <TabItem Header="Test Generation">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid x:Name="TopGrid" Grid.Row ="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid x:Name="TopLeftGrid" Grid.Column="0" Margin="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+    <TabControl>
+        <TabItem Header="Test Generation">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid x:Name="TopGrid" Grid.Row ="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="TopLeftGrid" Grid.Column="0" Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                            <!-- GroupBox: Directory Selection -->
-                            <GroupBox Header="Directory Selection" Grid.Row="0">
-                                <Grid Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                        <!-- GroupBox: Directory Selection -->
+                        <GroupBox Header="Directory Selection" Grid.Row="0">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                    <!-- First Row -->
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Source Directory:" Margin="5,5,20,0" FontSize="10"/>
-                                    <TextBox x:Name="SrcFolderPath" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" />
-                                    <Button Grid.Row="0" Grid.Column="2" Content="..." Margin="0,0,0,5" />
+                                <!-- First Row -->
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Source Directory:" Margin="5,5,20,0" FontSize="10"/>
+                                <TextBox x:Name="SrcFolderPath" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" />
+                                <Button Grid.Row="0" Grid.Column="2" Content="..." Margin="0,0,0,5" />
 
-                                    <!-- Second Row -->
-                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Test Directory:" Margin="5,0,20,0" FontSize="10"/>
-                                    <TextBox x:Name="TestsFolderPath" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" />
-                                    <Button Grid.Row="1" Grid.Column="2" Content="..." />
-                                </Grid>
-                            </GroupBox>
+                                <!-- Second Row -->
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Test Directory:" Margin="5,0,20,0" FontSize="10"/>
+                                <TextBox x:Name="TestsFolderPath" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" />
+                                <Button Grid.Row="1" Grid.Column="2" Content="..." />
+                            </Grid>
+                        </GroupBox>
 
-                            <!-- GroupBox: Actions (Optional) -->
-                            <GroupBox Header="Actions" Grid.Row="1">
-                                <Grid Margin="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0" Content="Generate" Margin="5" />
-                                    <Button Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false"/>
-                                    <Button Grid.Column="2" Content="Save config" Margin="5" IsEnabled="false"/>
-                                </Grid>
-                            </GroupBox>
-                        </Grid>
-                        <GroupBox Header="Project Overview" Grid.Column="1">
-                            <TreeView x:Name="ProjectTreeView">
-
-                            </TreeView >
+                        <!-- GroupBox: Actions (Optional) -->
+                        <GroupBox Header="Actions" Grid.Row="1">
+                            <Grid Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Content="Generate" Margin="5" />
+                                <Button Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false"/>
+                                <Button Grid.Column="2" Content="Save config" Margin="5" IsEnabled="false"/>
+                            </Grid>
                         </GroupBox>
                     </Grid>
-                    <GroupBox Grid.Row="1" Header="Log">
-                        <ScrollViewer x:Name="LogWindow"
-                                      Background="LightGray"
-                                      VerticalScrollBarVisibility="Auto"
-                                      HorizontalScrollBarVisibility="Auto" />
+                    <GroupBox Header="Project Overview" Grid.Column="1">
+                        <TreeView x:Name="ProjectTreeView">
+
+                        </TreeView >
                     </GroupBox>
                 </Grid>
-            </TabItem>
-            <TabItem Header="Test Schema">
-                <Grid Background="#FFE5E5E5">
+                <GroupBox Grid.Row="1" Header="Log">
+                    <ScrollViewer x:Name="LogWindow"
+                                  Background="LightGray"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Auto" />
+                </GroupBox>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Test Schema">
+            <Grid Background="#FFE5E5E5">
 
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
