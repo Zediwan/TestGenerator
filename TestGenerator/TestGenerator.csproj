@@ -3,9 +3,26 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>TestGenerator</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="UI\App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="UI\App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <Folder Include="CLI\" />
+      <Folder Include="Core\Configuration\" />
+      <Folder Include="Core\Generation\" />
+      <Folder Include="Core\Scanning\" />
+      <Folder Include="Core\Common\" />
+  </ItemGroup>
 
 </Project>
