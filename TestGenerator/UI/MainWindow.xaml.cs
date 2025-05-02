@@ -13,7 +13,7 @@ namespace TestGenerator;
 
 public partial class MainWindow : Window
 {
-    private static readonly Random Random = new Random();
+    private static readonly Random Random = new();
 
     public MainWindow()
     {
@@ -50,7 +50,7 @@ public partial class MainWindow : Window
         return root;
     }
 
-    private TreeViewItem CreateTreeItem(string name)
+    private static TreeViewItem CreateTreeItem(string name)
     {
         return new TreeViewItem() { Header = new CheckBox() { Content = name } }; ;
     }
