@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace TestGenerator.Core.Scanning;
 

@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TestGenerator.Core.Scanning;
 
 namespace TestGenerator;
@@ -14,7 +16,9 @@ public partial class MainWindow : Window
         InitializeComponent();
         ProjectTreeView.Items.Clear();
         ProjectTreeView.Items.Add(LoadSampleDirectoryTree());
-        Scanner.LogFolderStructure(@"D:\Repositories\EvoSim\EvoSim", logTextBlock: LogText);
+        // Scanner.LogFolderStructure(@"D:\Repositories\EvoSim\EvoSim", logTextBlock: LogText);
+        var t = DirectoryScanner.ScanDirectory(@"D:\Repositories\EvoSim\EvoSim");
+        var i = 1;
     }
 
     private static TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
