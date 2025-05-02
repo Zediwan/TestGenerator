@@ -22,7 +22,6 @@
       <Folder Include="Core\Configuration\" />
       <Folder Include="Core\Generation\" />
       <Folder Include="Core\Scanning\" />
-      <Folder Include="Core\Common\" />
   </ItemGroup>
 
 </Project>
