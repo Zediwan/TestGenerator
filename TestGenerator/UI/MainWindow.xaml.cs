@@ -22,7 +22,7 @@ public partial class MainWindow : Window
         ProjectTreeView.Items.Add(LoadSampleDirectoryTree());
     }
 
-    private TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
+    private static TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
     {
         var numSubElements = 0;
         var name = $"File {depth}:{Random.Next(100)}.cs";
@@ -52,6 +52,28 @@ public partial class MainWindow : Window
 
     private static TreeViewItem CreateTreeItem(string name)
     {
-        return new TreeViewItem() { Header = new CheckBox() { Content = name } }; ;
+        var checkBox = new CheckBox() { Content = name };
+        checkBox.Checked += OnCheckboxToggled;
+        checkBox.Unchecked += OnCheckboxToggled;
+
+        var treeViewItem = new TreeViewItem() { Header = checkBox };
+
+        checkBox.Tag = treeViewItem;
+
+        return treeViewItem;
+    }
+
+    private static void OnCheckboxToggled(object sender, RoutedEventArgs e)
+    {
+        var checkbox = (CheckBox) sender;
+
+        if (checkbox.Tag is not TreeViewItem treeViewItem) return;
+        if (treeViewItem.Items.IsEmpty) return;
+
+        foreach (TreeViewItem item in treeViewItem.Items)
+        {
+            if (item.Header is not CheckBox childCheckbox) continue;
+            childCheckbox.IsChecked = checkbox.IsChecked;
+        }
     }
 }
