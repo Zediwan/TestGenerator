@@ -7,8 +7,8 @@ public class Folder
     private readonly DirectoryInfo _directoryInfo;
     public string Name => _directoryInfo.Name;
     public string FullPath => _directoryInfo.FullName;
-    public Folder[] SubFolders { get; } = [];
-    public File[] Files { get; } = [];
+    public Folder[] SubFolders { get; }
+    public File[] Files { get; }
 
     public Folder(DirectoryInfo directoryInfo)
     {
