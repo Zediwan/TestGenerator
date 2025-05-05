@@ -25,13 +25,11 @@ public class Class
         Modifiers = _syntax.Modifiers.Select(m => m.ToString()).ToList();
         Methods = _syntax.DescendantNodes()
             .OfType<MethodDeclarationSyntax>()
-            .ToList()
             .Select(m => new Method(m))
             .ToList();
         Fields = _syntax.DescendantNodes().OfType<FieldDeclarationSyntax>().ToList();
         Properties = _syntax.DescendantNodes()
             .OfType<PropertyDeclarationSyntax>()
-            .ToList()
             .Select(p => new Property(p))
             .ToList();
     }

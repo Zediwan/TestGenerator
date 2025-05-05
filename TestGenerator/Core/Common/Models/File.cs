@@ -25,7 +25,6 @@ public class File
             .GetRoot()
             .DescendantNodes()
             .OfType<ClassDeclarationSyntax>()
-            .ToList()
             .Select(c => new Class(c))
             .ToList();
 
@@ -33,7 +32,6 @@ public class File
             .GetRoot()
             .DescendantNodes()
             .OfType<MethodDeclarationSyntax>()
-            .ToList()
             .Select(m => new Method(m))
             .ToList();
     }
