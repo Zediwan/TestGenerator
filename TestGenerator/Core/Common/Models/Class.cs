@@ -10,6 +10,7 @@ public class Class
     public List<Method> Methods { get; set; }
     public List<string> Modifiers;
     public List<FieldDeclarationSyntax> Fields;
+    public List<Property> Properties;
 
     public Class(ClassDeclarationSyntax classDeclarationSyntax)
     {
@@ -28,6 +29,11 @@ public class Class
             .Select(m => new Method(m))
             .ToList();
         Fields = _syntax.DescendantNodes().OfType<FieldDeclarationSyntax>().ToList();
+        Properties = _syntax.DescendantNodes()
+            .OfType<PropertyDeclarationSyntax>()
+            .ToList()
+            .Select(p => new Property(p))
+            .ToList();
     }
     public new string ToString()
     {

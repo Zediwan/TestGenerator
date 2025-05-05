@@ -27,7 +27,7 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadFolder(Folder folder)
     {
-        var TreeItem = CreateTreeItem(folder.Name);
+        var TreeItem = CreateTreeItem(folder.ToString());
 
         foreach (var file in folder.Files)
         {
@@ -44,7 +44,7 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadFile(File file)
     {
-        var TreeItem = CreateTreeItem(file.Name);
+        var TreeItem = CreateTreeItem(file.ToString());
 
         foreach (var _class in file.Classes)
         {
@@ -56,11 +56,33 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadClass(Class _class)
     {
-        var TreeItem = CreateTreeItem(_class.Name);
+        var TreeItem = CreateTreeItem(_class.ToString());
+
+        foreach (var property in _class.Properties)
+        {
+            TreeItem.Items.Add(LoadProperty(property));
+        }
 
         foreach (var method in _class.Methods)
         {
-            TreeItem.Items.Add(CreateTreeItem(method.Name));
+            TreeItem.Items.Add(CreateTreeItem(method.ToString()));
+        }
+
+        return TreeItem;
+    }
+
+    private static TreeViewItem LoadProperty(Property _property)
+    {
+        var TreeItem = CreateTreeItem(_property.ToString());
+
+        if (_property.Getter != null)
+        {
+            TreeItem.Items.Add(CreateTreeItem(_property.Getter.ToString()));
+        }
+
+        if (_property.Setter != null)
+        {
+            TreeItem.Items.Add(CreateTreeItem(_property.Setter.ToString()));
         }
 
         return TreeItem;
