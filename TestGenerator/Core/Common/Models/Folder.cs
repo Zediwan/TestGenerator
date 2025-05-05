@@ -14,14 +14,12 @@ public class Folder
     {
         _directoryInfo = directoryInfo;
 
-        foreach (var directory in _directoryInfo.GetDirectories())
-        {
-            SubFolders.Append(new Folder(directory));
-        }
+        SubFolders = _directoryInfo.GetDirectories().Select(d => new Folder(d)).ToArray();
+        Files = _directoryInfo.GetFiles().Select(f => new File(f)).ToArray();
+    }
 
-        foreach (var fileInfo in _directoryInfo.GetFiles())
-        {
-            Files.Append(new File(fileInfo));
-        }
+    public new string ToString()
+    {
+        return this.Name;
     }
 }

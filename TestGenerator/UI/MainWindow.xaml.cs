@@ -3,7 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TestGenerator.Core.Common.Models;
 using TestGenerator.Core.Scanning;
+using File = TestGenerator.Core.Common.Models.File;
 
 namespace TestGenerator;
 
@@ -15,10 +17,53 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         ProjectTreeView.Items.Clear();
-        ProjectTreeView.Items.Add(LoadSampleDirectoryTree());
-        // Scanner.LogFolderStructure(@"D:\Repositories\EvoSim\EvoSim", logTextBlock: LogText);
-        var t = DirectoryScanner.ScanDirectory(@"D:\Repositories\EvoSim\EvoSim");
-        var i = 1;
+        ProjectTreeView.Items.Add(LoadDirectoryTree(DirectoryScanner.ScanDirectory(@"D:\Repositories\EvoSim\EvoSim")));
+    }
+
+    private static TreeViewItem LoadDirectoryTree(Folder rootFolder)
+    {
+        return LoadFolder(rootFolder);
+    }
+
+    private static TreeViewItem LoadFolder(Folder folder)
+    {
+        var TreeItem = CreateTreeItem(folder.Name);
+
+        foreach (var file in folder.Files)
+        {
+            TreeItem.Items.Add(LoadFile(file));
+        }
+
+        foreach (var subfolder in folder.SubFolders)
+        {
+            TreeItem.Items.Add(LoadFolder(subfolder));
+        }
+
+        return TreeItem;
+    }
+
+    private static TreeViewItem LoadFile(File file)
+    {
+        var TreeItem = CreateTreeItem(file.Name);
+
+        foreach (var _class in file.Classes)
+        {
+            TreeItem.Items.Add(LoadClass(_class));
+        }
+
+        return TreeItem;
+    }
+
+    private static TreeViewItem LoadClass(Class _class)
+    {
+        var TreeItem = CreateTreeItem(_class.Name);
+
+        foreach (var method in _class.Methods)
+        {
+            TreeItem.Items.Add(CreateTreeItem(method.Name));
+        }
+
+        return TreeItem;
     }
 
     private static TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
