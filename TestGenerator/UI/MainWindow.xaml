@@ -39,7 +39,7 @@
                                 <!-- First Row -->
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Source Directory:" Margin="5,5,20,0" FontSize="10"/>
                                 <TextBox x:Name="SrcFolderPath" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" />
-                                <Button Grid.Row="0" Grid.Column="2" Content="..." Margin="0,0,0,5" />
+                                <Button Grid.Row="0" Grid.Column="2" Content="..." Margin="0,0,0,5" Click="SelectSourceFolder_Click"/>
 
                                 <!-- Second Row -->
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Test Directory:" Margin="5,0,20,0" FontSize="10"/>
@@ -56,9 +56,9 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Content="Generate" Margin="5" />
+                                <Button Grid.Column="0" Content="Scan" Margin="5" Click="ScanButton_Click"/>
                                 <Button Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false"/>
-                                <Button Grid.Column="2" Content="Save config" Margin="5" IsEnabled="false"/>
+                                <Button Grid.Column="2" Content="Generate" Margin="5" IsEnabled="false"/>
                             </Grid>
                         </GroupBox>
                     </Grid>

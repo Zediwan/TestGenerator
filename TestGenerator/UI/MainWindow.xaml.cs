@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TestGenerator.Core.Common.Models;
 using TestGenerator.Core.Scanning;
 using File = TestGenerator.Core.Common.Models.File;
+using CheckBox = System.Windows.Controls.CheckBox;
 
 namespace TestGenerator;
 
@@ -16,13 +17,13 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        LoadProjectTreeView();
+        //LoadProjectTreeView();
     }
 
-    private void LoadProjectTreeView()
+    private void LoadProjectTreeView(string path)
     {
         ProjectTreeView.Items.Clear();
-        ProjectTreeView.Items.Add(LoadDirectoryTree(DirectoryScanner.ScanDirectory(@"D:\Repositories\EvoSim\EvoSim")));
+        ProjectTreeView.Items.Add(LoadDirectoryTree(DirectoryScanner.ScanDirectory(path)));
     }
 
     private static TreeViewItem LoadDirectoryTree(Folder rootFolder)
@@ -146,5 +147,30 @@ public partial class MainWindow : Window
             if (item.Header is not CheckBox childCheckbox) continue;
             childCheckbox.IsChecked = checkbox.IsChecked;
         }
+    }
+
+    private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new FolderBrowserDialog();
+
+        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        {
+            SrcFolderPath.Text = dialog.SelectedPath;
+            // Optional: Start scanning here
+        }
+    }
+
+    private void ScanButton_Click(object sender, RoutedEventArgs e)
+    {
+        string path = SrcFolderPath.Text;
+
+        if (!Directory.Exists(path))
+        {
+            System.Windows.MessageBox.Show("Invalid folder path.");
+            return;
+        }
+
+        // Call your scanner
+        LoadProjectTreeView(path);
     }
 }
