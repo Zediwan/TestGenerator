@@ -16,6 +16,11 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        LoadProjectTreeView();
+    }
+
+    private void LoadProjectTreeView()
+    {
         ProjectTreeView.Items.Clear();
         ProjectTreeView.Items.Add(LoadDirectoryTree(DirectoryScanner.ScanDirectory(@"D:\Repositories\EvoSim\EvoSim")));
     }
