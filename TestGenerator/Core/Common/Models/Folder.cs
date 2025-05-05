@@ -4,6 +4,7 @@ namespace TestGenerator.Core.Common.Models;
 
 public class Folder
 {
+    public static readonly string Icon = "\ue188";
     private readonly DirectoryInfo _directoryInfo;
     public string Name => _directoryInfo.Name;
     public string FullPath => _directoryInfo.FullName;

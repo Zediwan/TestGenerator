@@ -4,6 +4,7 @@ namespace TestGenerator.Core.Common.Models;
 
 public class Property
 {
+    public static readonly string Icon = "\uE713";
     private readonly PropertyDeclarationSyntax _syntax;
     public string Name { get; set; }
     public string Type { get; set; }

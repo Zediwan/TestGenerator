@@ -7,32 +7,21 @@ namespace TestGenerator.Core.Common.Models;
 
 public class File
 {
+    public static readonly string Icon = "\ue132";
     private readonly FileInfo _fileInfo;
     public string Name => _fileInfo.Name;
     public string FullPath => _fileInfo.FullName;
-    public string Code { get; set; }
     public List<Class> Classes { get; set; }
-    public SyntaxTree SyntaxTree { get; set; }
-    public List<Method> Methods { get; set; }
 
     public File(FileInfo fileInfo)
     {
         _fileInfo = fileInfo;
-        Code = System.IO.File.ReadAllText(FullPath);
-        SyntaxTree = CSharpSyntaxTree.ParseText(Code);
-
-        Classes = SyntaxTree
+        Classes = CSharpSyntaxTree
+            .ParseText(System.IO.File.ReadAllText(FullPath))
             .GetRoot()
             .DescendantNodes()
             .OfType<ClassDeclarationSyntax>()
             .Select(c => new Class(c))
-            .ToList();
-
-        Methods = SyntaxTree
-            .GetRoot()
-            .DescendantNodes()
-            .OfType<MethodDeclarationSyntax>()
-            .Select(m => new Method(m))
             .ToList();
     }
 

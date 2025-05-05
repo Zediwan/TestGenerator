@@ -7,6 +7,7 @@ using TestGenerator.Core.Common.Models;
 using TestGenerator.Core.Scanning;
 using File = TestGenerator.Core.Common.Models.File;
 using CheckBox = System.Windows.Controls.CheckBox;
+using Orientation = System.Windows.Controls.Orientation;
 
 namespace TestGenerator;
 
@@ -33,7 +34,7 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadFolder(Folder folder)
     {
-        var TreeItem = CreateTreeItem(folder.ToString());
+        var TreeItem = CreateTreeItem(folder.ToString(), Folder.Icon);
 
         foreach (var file in folder.Files)
         {
@@ -50,7 +51,7 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadFile(File file)
     {
-        var TreeItem = CreateTreeItem(file.ToString());
+        var TreeItem = CreateTreeItem(file.ToString(), File.Icon);
 
         foreach (var _class in file.Classes)
         {
@@ -62,7 +63,7 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadClass(Class _class)
     {
-        var TreeItem = CreateTreeItem(_class.ToString());
+        var TreeItem = CreateTreeItem(_class.ToString(), Class.Icon);
 
         foreach (var property in _class.Properties)
         {
@@ -71,7 +72,7 @@ public partial class MainWindow : Window
 
         foreach (var method in _class.Methods)
         {
-            TreeItem.Items.Add(CreateTreeItem(method.ToString()));
+            TreeItem.Items.Add(CreateTreeItem(method.ToString(), Method.Icon));
         }
 
         return TreeItem;
@@ -79,16 +80,16 @@ public partial class MainWindow : Window
 
     private static TreeViewItem LoadProperty(Property _property)
     {
-        var TreeItem = CreateTreeItem(_property.ToString());
+        var TreeItem = CreateTreeItem(_property.ToString(), Property.Icon);
 
         if (_property.Getter != null)
         {
-            TreeItem.Items.Add(CreateTreeItem(_property.Getter.ToString()));
+            TreeItem.Items.Add(CreateTreeItem(_property.Getter.ToString(), Method.Icon));
         }
 
         if (_property.Setter != null)
         {
-            TreeItem.Items.Add(CreateTreeItem(_property.Setter.ToString()));
+            TreeItem.Items.Add(CreateTreeItem(_property.Setter.ToString(), Method.Icon));
         }
 
         return TreeItem;
@@ -110,7 +111,7 @@ public partial class MainWindow : Window
             numSubElements = 5;
         }
 
-        var root = CreateTreeItem(name);
+        var root = CreateTreeItem(name, "");
 
         if (numSubElements <= 0) return root;
 
@@ -122,9 +123,13 @@ public partial class MainWindow : Window
         return root;
     }
 
-    private static TreeViewItem CreateTreeItem(string name)
+    private static TreeViewItem CreateTreeItem(string name, string symbol)
     {
-        var checkBox = new CheckBox() { Content = name };
+        var stackPanel = new StackPanel(){Orientation = Orientation.Horizontal};
+        stackPanel.Children.Add(new TextBlock() { FontFamily = new System.Windows.Media.FontFamily("Segoe MDL2 Assets"), Text = symbol, Margin = new Thickness(0, 2.5, 5, 0) });
+        stackPanel.Children.Add(new TextBlock() { Text = name });
+
+        var checkBox = new CheckBox() { Content = stackPanel };
         checkBox.Checked += OnCheckboxToggled;
         checkBox.Unchecked += OnCheckboxToggled;
 

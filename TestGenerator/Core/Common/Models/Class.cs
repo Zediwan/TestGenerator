@@ -4,11 +4,15 @@ namespace TestGenerator.Core.Common.Models;
 
 public class Class
 {
+    public static readonly string Icon = "\uE8A5";
     private readonly ClassDeclarationSyntax _syntax;
+
+    public readonly List<string> Modifiers;
+
     public readonly string Name;
     public string Namespace { get; set; }
     public List<Method> Methods { get; set; }
-    public List<string> Modifiers;
+    
     public List<FieldDeclarationSyntax> Fields;
     public List<Property> Properties;
 
@@ -20,9 +24,10 @@ public class Class
         }
 
         _syntax = classDeclarationSyntax;
+        Modifiers = _syntax.Modifiers.Select(m => m.ToString()).ToList();
+
         Name = _syntax.Identifier.Text;
         Namespace = _syntax.Parent.ToString();
-        Modifiers = _syntax.Modifiers.Select(m => m.ToString()).ToList();
         Methods = _syntax.DescendantNodes()
             .OfType<MethodDeclarationSyntax>()
             .Select(m => new Method(m))

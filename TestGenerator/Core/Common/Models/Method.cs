@@ -4,6 +4,7 @@ namespace TestGenerator.Core.Common.Models;
 
 public class Method
 {
+    public static readonly string Icon = "\uE945";
     private readonly MethodDeclarationSyntax _syntax;
     public string Name { get; }
     public string ReturnType { get; }
