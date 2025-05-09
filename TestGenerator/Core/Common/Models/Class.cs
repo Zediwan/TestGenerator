@@ -15,6 +15,7 @@ public class Class
     
     public List<FieldDeclarationSyntax> Fields;
     public List<Property> Properties;
+    public List<Constructor> Constructors;
 
     public Class(ClassDeclarationSyntax classDeclarationSyntax)
     {
@@ -28,6 +29,10 @@ public class Class
 
         Name = _syntax.Identifier.Text;
         Namespace = _syntax.Parent.ToString();
+        Constructors = _syntax.DescendantNodes()
+            .OfType<ConstructorDeclarationSyntax>()
+            .Select(cm => new Constructor(cm))
+            .ToList();
         Methods = _syntax.DescendantNodes()
             .OfType<MethodDeclarationSyntax>()
             .Select(m => new Method(m))

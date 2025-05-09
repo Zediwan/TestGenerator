@@ -65,6 +65,11 @@ public partial class MainWindow : Window
     {
         var TreeItem = CreateTreeItem(_class.ToString(), Class.Icon);
 
+        foreach (var constructor in _class.Constructors)
+        {
+            TreeItem.Items.Add(CreateTreeItem(constructor.ToString(), Constructor.Icon));
+        }
+
         foreach (var property in _class.Properties)
         {
             TreeItem.Items.Add(LoadProperty(property));
