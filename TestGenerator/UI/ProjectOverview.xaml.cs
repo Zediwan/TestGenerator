@@ -4,16 +4,18 @@ using TestGenerator.Core.Common.Models;
 using TestGenerator.Core.Scanning;
 using CheckBox = System.Windows.Controls.CheckBox;
 using Orientation = System.Windows.Controls.Orientation;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace TestGenerator.UI
 {
     /// <summary>
     /// Interaction logic for ProjectOverview.xaml
     /// </summary>
-    public partial class ProjectOverview : System.Windows.Controls.UserControl
+    public partial class ProjectOverview
     {
-
-        private static readonly Random Random = new();
+        // Symbols
+        private static readonly FontFamily SymbolFontFamily = new("Segoe MDL2 Assets");
+        private static readonly Thickness SymbolMargin = new(0, 2.5, 5, 0);
 
         public ProjectOverview()
         {
@@ -23,114 +25,86 @@ namespace TestGenerator.UI
         public void LoadProjectTreeView(string path)
         {
             Clear();
-            ProjectTreeView.Items.Add(LoadDirectoryTree(DirectoryScanner.ScanDirectory(path)));
+            ProjectTreeView.Items.Add(LoadFolder(DirectoryScanner.ScanDirectory(path)));
         }
 
-        private static TreeViewItem LoadDirectoryTree(Folder rootFolder)
+        public void Clear()
         {
-            return LoadFolder(rootFolder);
+            ProjectTreeView.Items.Clear();
         }
-
+        
         private static TreeViewItem LoadFolder(Folder folder)
         {
-            var TreeItem = CreateTreeItem(folder.ToString(), Folder.Icon);
+            var treeItem = CreateTreeItem(folder.ToString(), Folder.Icon);
 
             foreach (var file in folder.Files)
             {
-                TreeItem.Items.Add(LoadFile(file));
+                treeItem.Items.Add(LoadFile(file));
             }
 
             foreach (var subfolder in folder.SubFolders)
             {
-                TreeItem.Items.Add(LoadFolder(subfolder));
+                treeItem.Items.Add(LoadFolder(subfolder));
             }
 
-            return TreeItem;
+            return treeItem;
         }
 
         private static TreeViewItem LoadFile(File file)
         {
-            var TreeItem = CreateTreeItem(file.ToString(), File.Icon);
+            var treeItem = CreateTreeItem(file.ToString(), File.Icon);
 
-            foreach (var _class in file.Classes)
+            foreach (var cls in file.Classes)
             {
-                TreeItem.Items.Add(LoadClass(_class));
+                treeItem.Items.Add(LoadClass(cls));
             }
 
-            return TreeItem;
+            return treeItem;
         }
 
-        private static TreeViewItem LoadClass(Class _class)
+        private static TreeViewItem LoadClass(Class cls)
         {
-            var TreeItem = CreateTreeItem(_class.ToString(), Class.Icon);
+            var treeItem = CreateTreeItem(cls.ToString(), Class.Icon);
 
-            foreach (var constructor in _class.Constructors)
+            foreach (var constructor in cls.Constructors)
             {
-                TreeItem.Items.Add(CreateTreeItem(constructor.ToString(), Constructor.Icon));
+                treeItem.Items.Add(CreateTreeItem(constructor.ToString(), Constructor.Icon));
             }
 
-            foreach (var property in _class.Properties)
+            foreach (var property in cls.Properties)
             {
-                TreeItem.Items.Add(LoadProperty(property));
+                treeItem.Items.Add(LoadProperty(property));
             }
 
-            foreach (var method in _class.Methods)
+            foreach (var method in cls.Methods)
             {
-                TreeItem.Items.Add(CreateTreeItem(method.ToString(), Method.Icon));
+                treeItem.Items.Add(CreateTreeItem(method.ToString(), Method.Icon));
             }
 
-            return TreeItem;
+            return treeItem;
         }
 
-        private static TreeViewItem LoadProperty(Property _property)
+        private static TreeViewItem LoadProperty(Property prop)
         {
-            var TreeItem = CreateTreeItem(_property.ToString(), Property.Icon);
+            var treeItem = CreateTreeItem(prop.ToString(), Property.Icon);
 
-            if (_property.Getter != null)
+            if (prop.Getter != null)
             {
-                TreeItem.Items.Add(CreateTreeItem(_property.Getter.ToString(), Method.Icon));
+                treeItem.Items.Add(CreateTreeItem(prop.Getter.ToString(), Method.Icon));
             }
 
-            if (_property.Setter != null)
+            if (prop.Setter != null)
             {
-                TreeItem.Items.Add(CreateTreeItem(_property.Setter.ToString(), Method.Icon));
+                treeItem.Items.Add(CreateTreeItem(prop.Setter.ToString(), Method.Icon));
             }
 
-            return TreeItem;
-        }
-
-        private static TreeViewItem LoadSampleDirectoryTree(int depth = 0, int maxDepth = 5, int maxPerLevel = 3)
-        {
-            var numSubElements = 0;
-            var name = $"File {depth}:{Random.Next(100)}.cs";
-
-            if (depth < maxDepth)
-            {
-                numSubElements = Random.Next(2) == 1 ? Random.Next(maxPerLevel) : 0;
-                name = numSubElements > 0 ? $"Folder {depth}:{Random.Next(10)}" : $"File {depth}:{Random.Next(100)}.cs";
-            }
-            if (depth == 0)
-            {
-                name = "Project";
-                numSubElements = 5;
-            }
-
-            var root = CreateTreeItem(name, "");
-
-            if (numSubElements <= 0) return root;
-
-            for (var i = 0; i < numSubElements; i++)
-            {
-                root.Items.Add(LoadSampleDirectoryTree(depth + 1, maxDepth, maxPerLevel));
-            }
-
-            return root;
+            return treeItem;
         }
 
         private static TreeViewItem CreateTreeItem(string name, string symbol)
         {
             var stackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
-            stackPanel.Children.Add(new TextBlock() { FontFamily = new System.Windows.Media.FontFamily("Segoe MDL2 Assets"), Text = symbol, Margin = new Thickness(0, 2.5, 5, 0) });
+            stackPanel.Children.Add(new TextBlock() { FontFamily = SymbolFontFamily, Text = symbol, Margin = SymbolMargin });
             stackPanel.Children.Add(new TextBlock() { Text = name });
 
             var checkBox = new CheckBox() { Content = stackPanel };
@@ -157,10 +131,6 @@ namespace TestGenerator.UI
                 if (item.Header is not CheckBox childCheckbox) continue;
                 childCheckbox.IsChecked = checkbox.IsChecked;
             }
-        }
-        public void Clear()
-        {
-            ProjectTreeView.Items.Clear();
         }
     }
 }
