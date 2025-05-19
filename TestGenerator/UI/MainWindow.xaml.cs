@@ -24,7 +24,7 @@ public partial class MainWindow : Window
 
     private void ScanButton_Click(object sender, RoutedEventArgs e)
     {
-        string path = SrcFolderPath.Text;
+        var path = SrcFolderPath.Text;
 
         if (!Directory.Exists(path))
         {
@@ -49,7 +49,7 @@ public partial class MainWindow : Window
 
     private void GenerateButton_Click(object sender, RoutedEventArgs e)
     {
-        string path = TestsFolderPath.Text;
+        var path = TestsFolderPath.Text;
         if (!Directory.Exists(path))
         {
             System.Windows.MessageBox.Show("Invalid folder path.");
