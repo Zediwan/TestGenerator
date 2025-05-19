@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:TestGenerator.UI"
         mc:Ignorable="d"
         Title="Test Generator" Height="450" Width="800">
     <TabControl>
@@ -62,11 +63,7 @@
                             </Grid>
                         </GroupBox>
                     </Grid>
-                    <GroupBox Header="Project Overview" Grid.Column="1">
-                        <TreeView x:Name="ProjectTreeView">
-
-                        </TreeView >
-                    </GroupBox>
+                    <ui:ProjectOverview x:Name="ProjectOverview" Grid.Column="1"/>
                 </Grid>
                 <GroupBox Grid.Row="1" Header="Log">
                     <ScrollViewer x:Name="LogWindow"
@@ -79,9 +76,14 @@
             </Grid>
         </TabItem>
         <TabItem Header="Test Schema">
-            <Grid Background="#FFE5E5E5">
-
-            </Grid>
+            <TabControl>
+                <TabItem Header="General"></TabItem>
+                <TabItem Header="Files"></TabItem>
+                <TabItem Header="Classes"></TabItem>
+                <TabItem Header="Constructors"></TabItem>
+                <TabItem Header="Properties"></TabItem>
+                <TabItem Header="Methods"></TabItem>
+            </TabControl>
         </TabItem>
     </TabControl>
 </Window>
