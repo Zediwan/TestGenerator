@@ -32,8 +32,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        // Call your scanner
-        ProjectOverview.LoadProjectTreeView(path);
+        ProjectOverview.Load(path);
 
         ClearButton.IsEnabled = true;
     }

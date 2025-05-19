@@ -22,7 +22,7 @@ namespace TestGenerator.UI
             InitializeComponent();
         }
 
-        public void LoadProjectTreeView(string path)
+        public void Load(string path)
         {
             Clear();
             ProjectTreeView.Items.Add(LoadFolder(DirectoryScanner.ScanDirectory(path)));
