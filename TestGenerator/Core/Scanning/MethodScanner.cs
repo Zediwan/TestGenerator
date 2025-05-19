@@ -5,7 +5,7 @@ namespace TestGenerator.Core.Scanning;
 
 public class MethodScanner
 {
-    public static void Scan(File file)
+    public static void Scan(Method method)
     {
     }
 }
