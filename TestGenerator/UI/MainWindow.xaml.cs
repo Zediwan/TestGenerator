@@ -1,15 +1,13 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TestGenerator.Core.Common.Models;
 using TestGenerator.Core.Scanning;
 using File = TestGenerator.Core.Common.Models.File;
 using CheckBox = System.Windows.Controls.CheckBox;
 using Orientation = System.Windows.Controls.Orientation;
 
-namespace TestGenerator;
+namespace TestGenerator.UI;
 
 public partial class MainWindow : Window
 {
@@ -18,7 +16,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        //LoadProjectTreeView();
     }
 
     private void LoadProjectTreeView(string path)
