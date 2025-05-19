@@ -10,5 +10,6 @@ public static class FolderScanner
         folder.Files = folder.DirectoryInfo.GetFiles().Select(f => new File(f)).ToArray();
         
         foreach (var subfolder in folder.SubFolders) Scan(subfolder);
+        foreach (var file in folder.Files) FileScanner.Scan(file);
     }
 }
