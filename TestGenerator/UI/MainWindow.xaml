@@ -44,7 +44,7 @@
                                 <!-- Second Row -->
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Test Directory:" Margin="5,0,20,0" FontSize="10"/>
                                 <TextBox x:Name="TestsFolderPath" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" />
-                                <Button Grid.Row="1" Grid.Column="2" Content="..." />
+                                <Button Grid.Row="1" Grid.Column="2" Content="..." Click="SelectTestFolder_Click"/>
                             </Grid>
                         </GroupBox>
 
@@ -56,9 +56,9 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Content="Scan" Margin="5" Click="ScanButton_Click"/>
-                                <Button Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false"/>
-                                <Button Grid.Column="2" Content="Generate" Margin="5" IsEnabled="false"/>
+                                <Button x:Name="ScanButton" Grid.Column="0" Content="Scan" Margin="5" IsEnabled="false" Click="ScanButton_Click"/>
+                                <Button x:Name="ClearButton" Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false" Click="ClearButton_Click"/>
+                                <Button x:Name="GenerateButton" Grid.Column="2" Content="Generate" Margin="5" IsEnabled="false" Click="GenerateButton_Click"/>
                             </Grid>
                         </GroupBox>
                     </Grid>

@@ -142,6 +142,7 @@ public partial class MainWindow : Window
         return treeViewItem;
     }
 
+    // TODO: if all children AND sub-children of an item are unchecked / checked then the same should count for the parent.
     private static void OnCheckboxToggled(object sender, RoutedEventArgs e)
     {
         var checkbox = (CheckBox) sender;
@@ -163,8 +164,9 @@ public partial class MainWindow : Window
         if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
         {
             SrcFolderPath.Text = dialog.SelectedPath;
-            // Optional: Start scanning here
         }
+
+        ScanButton.IsEnabled = !string.IsNullOrEmpty(SrcFolderPath.Text);
     }
 
     private void ScanButton_Click(object sender, RoutedEventArgs e)
@@ -179,5 +181,42 @@ public partial class MainWindow : Window
 
         // Call your scanner
         LoadProjectTreeView(path);
+
+        ClearButton.IsEnabled = true;
+    }
+
+    private void ClearButton_Click(object sender, RoutedEventArgs e)
+    {
+        ProjectTreeView.Items.Clear();
+        SrcFolderPath.Text = string.Empty;
+        TestsFolderPath.Text = string.Empty;
+        ScanButton.IsEnabled = false;
+        ClearButton.IsEnabled = false;
+        GenerateButton.IsEnabled = false;
+    }
+
+    private void GenerateButton_Click(object sender, RoutedEventArgs e)
+    {
+        string path = TestsFolderPath.Text;
+        if (!Directory.Exists(path))
+        {
+            System.Windows.MessageBox.Show("Invalid folder path.");
+            return;
+        }
+        // Call your generator
+        System.Windows.MessageBox.Show("Test generation is not implemented yet.");
+    }
+
+    private void SelectTestFolder_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new FolderBrowserDialog();
+
+        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        {
+            TestsFolderPath.Text = dialog.SelectedPath;
+        }
+
+        // TODO: this should only be enabled if the source folder and target folder are set and some items are selected
+        GenerateButton.IsEnabled = !string.IsNullOrEmpty(TestsFolderPath.Text);
     }
 }
