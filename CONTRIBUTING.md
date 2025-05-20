@@ -37,8 +37,8 @@ We work issue-first and branch-per-feature. Here’s the standard flow:
 
 3. **Create a branch** from `dev` using the following format:
    ```bash
-   git checkout -b issue-<number>-short-description
-   # example: issue-12-add-cli-flag
+   git checkout -b <number>-short-description
+   # example: 12-add-cli-flag
    ```
 
 4. Implement your feature or fix. Please document public methods and classes.
@@ -52,7 +52,7 @@ We work issue-first and branch-per-feature. Here’s the standard flow:
 
 7. Push your branch:
    ```bash
-   git push origin issue-12-add-cli-flag
+   git push origin 12-add-cli-flag
    ```
 
 8. Open a Pull Request targeting `dev`.
