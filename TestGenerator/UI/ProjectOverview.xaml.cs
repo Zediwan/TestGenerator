@@ -38,9 +38,10 @@ namespace TestGenerator.UI
             ProjectTreeView.Items.Clear();
         }
 
-        public void Generate(string srcFolderPath, string testFolderPath)
+        public void Generate(string testFolderPath, string prefix, string suffix)
         {
-            FileCreator.Create(testFolderPath, rootFolder.SubFolders[2].SubFolders[0].Files[0]);
+            var exampleFile = rootFolder.SubFolders[2].SubFolders[0].Files[0];
+            FileCreator.Create(testFolderPath, exampleFile, prefix, suffix);
         }
         
         private static TreeViewItem LoadFolder(Folder folder)

@@ -58,7 +58,7 @@ public partial class MainWindow : Window
         }
         // Call your generator
         System.Windows.MessageBox.Show("Test generation is not properly implemented yet.");
-        ProjectOverview.Generate(SrcFolderPath.Text, TestsFolderPath.Text);
+        ProjectOverview.Generate(TestsFolderPath.Text, TestSchema.MethodPrefix.Text, TestSchema.MethodSuffix.Text);
     }
 
     private void SelectTestFolder_Click(object sender, RoutedEventArgs e)

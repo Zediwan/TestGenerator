@@ -76,14 +76,7 @@
             </Grid>
         </TabItem>
         <TabItem Header="Test Schema">
-            <TabControl>
-                <TabItem Header="General"></TabItem>
-                <TabItem Header="Files"></TabItem>
-                <TabItem Header="Classes"></TabItem>
-                <TabItem Header="Constructors"></TabItem>
-                <TabItem Header="Properties"></TabItem>
-                <TabItem Header="Methods"></TabItem>
-            </TabControl>
+            <ui:TestSchema x:Name="TestSchema" />
         </TabItem>
     </TabControl>
 </Window>
