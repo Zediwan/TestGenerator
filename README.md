@@ -6,11 +6,35 @@
 
 ## Features
 
-- **Class Scanner**  
-  Recursively scans selected directories for `.cs` files and identifies public classes.
+### Planned Elements
+  - Files
+  - Classes
+  - Constructors
+  - Properties
+  - Methods
+   
+### Information Avaiable for Elements
+#### Files
+  - Classes
+#### Classes
+  - Modifiers
+  - Methods
+  - Properties
+  - Constructors
+  - Fields
+#### Constructors
+  - Parameters
+  - Modifiers
+#### Properties
+  - Type
+  - Modifier
+  - Getter / Setter
+#### Methods
+  - Return Type
+  - Parameters
+  - Modifiers
 
-- **Method Detection**  
-  Uses reflection to detect public methods, supporting method filtering and signature analysis.
+---
 
 - **Test File Generation**  
   Automatically generates unit test files for discovered classes and methods, using your naming conventions and structure preferences.
