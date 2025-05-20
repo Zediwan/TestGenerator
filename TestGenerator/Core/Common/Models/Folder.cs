@@ -2,10 +2,12 @@
 
 namespace TestGenerator.Core.Common.Models;
 
-public class Folder(DirectoryInfo directoryInfo)
+public class Folder(DirectoryInfo directoryInfo, Folder? parentFolder)
 {
     public static readonly string Icon = "\ue188";
     public readonly DirectoryInfo DirectoryInfo = directoryInfo;
+    public readonly Folder? ParentFolder = parentFolder;
+    public string? RootPath;
     public string Name => DirectoryInfo.Name;
     public string FullPath => DirectoryInfo.FullName;
     public Folder[] SubFolders { get; set; } = [];

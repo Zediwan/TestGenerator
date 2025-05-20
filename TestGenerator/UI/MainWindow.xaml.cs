@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using TestGenerator.Core.Generation;
 
 namespace TestGenerator.UI;
 
@@ -56,7 +57,8 @@ public partial class MainWindow : Window
             return;
         }
         // Call your generator
-        System.Windows.MessageBox.Show("Test generation is not implemented yet.");
+        System.Windows.MessageBox.Show("Test generation is not properly implemented yet.");
+        ProjectOverview.Generate(SrcFolderPath.Text, TestsFolderPath.Text);
     }
 
     private void SelectTestFolder_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using TestGenerator.Core.Common.Models;
+using TestGenerator.Core.Generation;
 using TestGenerator.Core.Scanning;
 using CheckBox = System.Windows.Controls.CheckBox;
 using Orientation = System.Windows.Controls.Orientation;
@@ -17,6 +18,8 @@ namespace TestGenerator.UI
         private static readonly FontFamily SymbolFontFamily = new("Segoe MDL2 Assets");
         private static readonly Thickness SymbolMargin = new(0, 2.5, 5, 0);
 
+        private Folder rootFolder;
+
         public ProjectOverview()
         {
             InitializeComponent();
@@ -25,12 +28,19 @@ namespace TestGenerator.UI
         public void Load(string path)
         {
             Clear();
-            ProjectTreeView.Items.Add(LoadFolder(DirectoryScanner.ScanDirectory(path)));
+
+            rootFolder = DirectoryScanner.ScanDirectory(path);
+            ProjectTreeView.Items.Add(LoadFolder(rootFolder));
         }
 
         public void Clear()
         {
             ProjectTreeView.Items.Clear();
+        }
+
+        public void Generate(string srcFolderPath, string testFolderPath)
+        {
+            FileCreator.Create(testFolderPath, rootFolder.SubFolders[2].SubFolders[0].Files[0]);
         }
         
         private static TreeViewItem LoadFolder(Folder folder)
