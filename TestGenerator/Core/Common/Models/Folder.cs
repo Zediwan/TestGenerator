@@ -7,7 +7,10 @@ public class Folder(DirectoryInfo directoryInfo, Folder? parentFolder)
     public static readonly string Icon = "\ue188";
     public readonly DirectoryInfo DirectoryInfo = directoryInfo;
     public readonly Folder? ParentFolder = parentFolder;
-    public string? RootPath;
+    /// <summary>
+    /// The path to this folder inside the project.
+    /// </summary>
+    public string? ProjectPath;
     public string Name => DirectoryInfo.Name;
     public string FullPath => DirectoryInfo.FullName;
     public Folder[] SubFolders { get; set; } = [];

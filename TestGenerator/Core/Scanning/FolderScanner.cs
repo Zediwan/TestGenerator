@@ -9,7 +9,7 @@ public static class FolderScanner
         // TODO: add documentation that explains this part
         if (folder.ParentFolder is { ParentFolder: not null })
         {
-            folder.RootPath = folder.ParentFolder.RootPath + folder.ParentFolder.Name + "\\";
+            folder.ProjectPath = folder.ParentFolder.ProjectPath + folder.ParentFolder.Name + "\\";
         }
         
 

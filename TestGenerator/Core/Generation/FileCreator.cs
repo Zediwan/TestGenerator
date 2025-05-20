@@ -13,17 +13,14 @@ public static class FileCreator
         const string suffix = "_test"; // TODO: make this a UI setting
         var fileName = prefix + file.Name.Replace(file.Extension, suffix + file.Extension);
         // Gather the relative path inside the src folder
-        var relativePath = file.ParentFolder?.RootPath + file.ParentFolder?.Name + "\\";
+        var relativePath = file.ParentFolder?.ProjectPath + file.ParentFolder?.Name + "\\";
         var filePath = pathToTestRootFolder + "\\" + relativePath + fileName;
 
         // Ensure the directory exists
         Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
 
         // Properly dispose the FileStream
-        using (System.IO.File.Create(filePath))
-        {
-            // Optionally, write initial content here
-        }
+        if (!System.IO.File.Exists(filePath)) using (System.IO.File.Create(filePath)){}
 
         System.Windows.MessageBox.Show("File has been created at: " + filePath);
     }
