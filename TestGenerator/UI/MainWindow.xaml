@@ -1,8 +1,9 @@
-﻿<Window x:Class="TestGenerator.MainWindow"
+﻿<Window x:Class="TestGenerator.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:TestGenerator.UI"
         mc:Ignorable="d"
         Title="Test Generator" Height="450" Width="800">
     <TabControl>
@@ -44,7 +45,7 @@
                                 <!-- Second Row -->
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Test Directory:" Margin="5,0,20,0" FontSize="10"/>
                                 <TextBox x:Name="TestsFolderPath" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" />
-                                <Button Grid.Row="1" Grid.Column="2" Content="..." />
+                                <Button Grid.Row="1" Grid.Column="2" Content="..." Click="SelectTestFolder_Click"/>
                             </Grid>
                         </GroupBox>
 
@@ -56,17 +57,13 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Content="Scan" Margin="5" Click="ScanButton_Click"/>
-                                <Button Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false"/>
-                                <Button Grid.Column="2" Content="Generate" Margin="5" IsEnabled="false"/>
+                                <Button x:Name="ScanButton" Grid.Column="0" Content="Scan" Margin="5" IsEnabled="false" Click="ScanButton_Click"/>
+                                <Button x:Name="ClearButton" Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false" Click="ClearButton_Click"/>
+                                <Button x:Name="GenerateButton" Grid.Column="2" Content="Generate" Margin="5" IsEnabled="false" Click="GenerateButton_Click"/>
                             </Grid>
                         </GroupBox>
                     </Grid>
-                    <GroupBox Header="Project Overview" Grid.Column="1">
-                        <TreeView x:Name="ProjectTreeView">
-
-                        </TreeView >
-                    </GroupBox>
+                    <ui:ProjectOverview x:Name="ProjectOverview" Grid.Column="1"/>
                 </Grid>
                 <GroupBox Grid.Row="1" Header="Log">
                     <ScrollViewer x:Name="LogWindow"
@@ -79,9 +76,14 @@
             </Grid>
         </TabItem>
         <TabItem Header="Test Schema">
-            <Grid Background="#FFE5E5E5">
-
-            </Grid>
+            <TabControl>
+                <TabItem Header="General"></TabItem>
+                <TabItem Header="Files"></TabItem>
+                <TabItem Header="Classes"></TabItem>
+                <TabItem Header="Constructors"></TabItem>
+                <TabItem Header="Properties"></TabItem>
+                <TabItem Header="Methods"></TabItem>
+            </TabControl>
         </TabItem>
     </TabControl>
 </Window>

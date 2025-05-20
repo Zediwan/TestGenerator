@@ -7,6 +7,8 @@ public static class DirectoryScanner
 {
     public static Folder ScanDirectory(string path)
     {
-        return new Folder(new DirectoryInfo(path));
+        var folder = new Folder(new DirectoryInfo(path));
+        FolderScanner.Scan(folder);
+        return folder;
     }
 }
