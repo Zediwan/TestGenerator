@@ -4,61 +4,74 @@
 
 ---
 
-## Features
+## 🚀 Features
 
-### Planned Elements
-  - Files
-  - Classes
-  - Constructors
-  - Properties
-  - Methods
-   
-### Information Avaiable for Elements
-#### Files
-  - Classes
-#### Classes
-  - Modifiers
-  - Methods
-  - Properties
-  - Constructors
-  - Fields
-#### Constructors
-  - Parameters
-  - Modifiers
-#### Properties
-  - Type
-  - Modifier
-  - Getter / Setter
-#### Methods
-  - Return Type
-  - Parameters
-  - Modifiers
+### 🧠 Element Detection
+The generator parses and extracts rich information from:
+- **Files** → Classes
+- **Classes** → Modifiers, Fields, Methods, Properties, Constructors
+- **Constructors** → Modifiers, Parameters
+- **Properties** → Type, Modifier, Getter/Setter
+- **Methods** → Return Type, Modifiers, Parameters
 
 ---
 
+### ✅ Current Features
 - **Test File Generation**  
-  Automatically generates unit test files for discovered classes and methods, using your naming conventions and structure preferences.
-
 - **Customizable Structure**  
-  Define test project root, folder layout, test class naming style, and test method naming templates.
-
-- **Log Terminal**  
-  Integrated console output within the WPF UI for status updates, warnings, and logs during scanning and generation.
-
-- **Path Selector Interface**  
-  Easily select the project root, output path, or test directory using intuitive file/folder pickers.
+- **Log Terminal in UI**  
+- **Path Selector Interface**
 
 ---
 
-- [ ] **Preview Test Output** before generation  
-- [ ] **Regenerate Tests** while preserving existing content (comments, manual changes)  
-- [ ] **Test Templates**: customizable code generation using templating engine (e.g. Scriban)  
-- [ ] **Method Filtering Rules** (by attribute, access modifier, return type, etc.)  
-- [ ] **Test Case Parameterization** for data-driven tests  
-- [ ] **Command-Line Interface (CLI)** for automation and CI integration  
-- [ ] **Multi-framework Support** (e.g., NUnit, xUnit, MSTest)
+### 🧭 Roadmap (Planned)
+- [ ] Preview Test Output before generation  
+- [ ] Regenerate Tests while preserving custom code  
+- [ ] Templated Test Generation (e.g. using Scriban)  
+- [ ] Method Filtering (by attribute/type/access)  
+- [ ] Test Case Parameterization  
+- [ ] CLI Support  
+- [ ] Multi-framework Support (NUnit, xUnit, MSTest)
+
+See the full roadmap here: [📌 GitHub Project Board](https://github.com/users/Zediwan/projects/6)
 
 ---
 
-Created by Jeremy Moser
+## 🤝 Contributing
+
+We love contributors! Here's how to get started:
+
+### 🧭 Where to Start
+- Browse the [issues](https://github.com/Zediwan/TestGenerator/issues), especially those labeled [`good first issue`](https://github.com/Zediwan/TestGenerator/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
+- Ask questions in the [Discussions](https://github.com/Zediwan/TestGenerator/discussions).
+
+### 🧵 Branching Flow
+1. Make sure you're on the `dev` branch.
+2. Create a feature branch with the pattern:
+   ```
+   issue-<number>-description
+   ```
+   Example:
+   ```
+   issue-12-fix-null-methods
+   ```
+
+3. Mention the issue in your PR or commit:
+   ```
+   Fixes #12
+   ```
+
+This links the PR to the issue and closes it upon merge.
+
+### 🧪 Testing
+If your change includes core logic, add unit tests under `TestGenerator.Tests`.
+
+---
+
+## 📄 License
+MIT
+
+---
+
+Created by **Jeremy Moser**  
 Built for productivity-minded developers who want to scale their unit testing with structure and speed.
