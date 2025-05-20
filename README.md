@@ -49,11 +49,11 @@ We love contributors! Here's how to get started:
 1. Make sure you're on the `dev` branch.
 2. Create a feature branch with the pattern:
    ```
-   issue-<number>-description
+   <number>-description
    ```
    Example:
    ```
-   issue-12-fix-null-methods
+   12-fix-null-methods
    ```
 
 3. Mention the issue in your PR or commit:
