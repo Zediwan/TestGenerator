@@ -18,7 +18,7 @@ namespace TestGenerator.UI
         private static readonly FontFamily SymbolFontFamily = new("Segoe MDL2 Assets");
         private static readonly Thickness SymbolMargin = new(0, 2.5, 5, 0);
 
-        private Folder rootFolder;
+        public Folder rootFolder;
 
         public ProjectOverview()
         {
@@ -36,12 +36,6 @@ namespace TestGenerator.UI
         public void Clear()
         {
             ProjectTreeView.Items.Clear();
-        }
-
-        public void Generate(string testFolderPath, string prefix, string suffix)
-        {
-            var exampleFile = rootFolder.SubFolders[2].SubFolders[0].Files[0];
-            FileCreator.Create(testFolderPath, exampleFile, prefix, suffix);
         }
         
         private static TreeViewItem LoadFolder(Folder folder)

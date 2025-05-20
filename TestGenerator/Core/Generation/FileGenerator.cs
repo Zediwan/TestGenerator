@@ -3,11 +3,11 @@ using File = TestGenerator.Core.Common.Models.File;
 
 namespace TestGenerator.Core.Generation;
 
-public static class FileCreator
+public static class FileGenerator
 {
-    public static void Create(string pathToTestRootFolder, File file, string prefix, string suffix)
+    public static string Create(string pathToTestRootFolder, File file, string prefix, string suffix)
     {
-        if (file.Extension != ".cs") return;
+        if (file.Extension != ".cs") throw new InvalidDataException("File is not a C# file.");
 
         var fileName = prefix + file.Name;
 
@@ -24,5 +24,7 @@ public static class FileCreator
         if (!System.IO.File.Exists(filePath)) using (System.IO.File.Create(filePath)){}
 
         System.Windows.MessageBox.Show("File has been created at: " + filePath);
+
+        return filePath;
     }
 }
