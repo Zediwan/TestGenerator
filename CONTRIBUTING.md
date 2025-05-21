@@ -35,27 +35,31 @@ We work issue-first and branch-per-feature. Here’s the standard flow:
 
 2. **Assign the issue to yourself** so others know you're working on it.
 
-3. **Create a branch** from `dev` using the following format:
+3. Make sure to add it to the [Roadmap Project](https://github.com/users/Zediwan/projects/6)
+
+4. If possible try to make an estimate on complexity, time estimate, estimated end and set status to "in progress"
+
+5. **Create a branch** from `dev` using the following format:
    ```bash
    git checkout -b <number>-short-description
    # example: 12-add-cli-flag
    ```
 
-4. Implement your feature or fix. Please document public methods and classes.
+6. Implement your feature or fix. Please document public methods and classes.
 
-5. Run and test your changes locally.
+7. Run and test your changes locally.
 
-6. **Commit with context** and reference the issue:
+8. **Commit with context** and reference the issue:
    ```bash
    git commit -m "Add CLI flag support [Fixes #12]"
    ```
 
-7. Push your branch:
+9. Push your branch:
    ```bash
    git push origin 12-add-cli-flag
    ```
 
-8. Open a Pull Request targeting `dev`.
+10. Open a Pull Request targeting `dev`.
 
 ---
 
