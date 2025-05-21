@@ -37,7 +37,7 @@ We work issue-first and branch-per-feature. Here’s the standard flow:
 
 3. Make sure to add it to the [Roadmap Project](https://github.com/users/Zediwan/projects/6)
 
-4. If possible try to make an estimate on complexity, time estimate, estimated end and set status to "in progress"
+4. If possible try to make an estimate on complexity, time estimate, estimated end and set status to "in progress". (Try to fill as many elements from the project as possible)
 
 5. **Create a branch** from `dev` using the following format:
    ```bash
