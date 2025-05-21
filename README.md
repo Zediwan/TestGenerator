@@ -18,6 +18,7 @@ The generator parses and extracts rich information from:
 
 ### ✅ Current Features
 - **Path Selector Interface**
+- **Source Directory Scanner**
 
 ---
 
