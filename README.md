@@ -17,14 +17,14 @@ The generator parses and extracts rich information from:
 ---
 
 ### ✅ Current Features
-- **Test File Generation**  
-- **Customizable Structure**  
-- **Log Terminal in UI**  
 - **Path Selector Interface**
 
 ---
 
 ### 🧭 Roadmap (Planned)
+- [ ] Test File Generation
+- [ ] Customizable Structure
+- [ ] Log Terminal in UI
 - [ ] Preview Test Output before generation  
 - [ ] Regenerate Tests while preserving custom code  
 - [ ] Templated Test Generation (e.g. using Scriban)  
