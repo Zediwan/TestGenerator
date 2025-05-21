@@ -1,6 +1,6 @@
 # TestGenerator
 
-**TestGenerator** is a WPF-based utility built with **.NET 8** and **C# 12** that automatically scans a given project directory for classes and generates structured test files based on customizable settings. Designed for maintainable and scalable testing, it supports both GUI and planned CLI workflows.
+**TestGenerator** is a WPF-based utility built with **.NET 8** and **C# 12** that scans a given project directory for classes and generates structured test files based on customizable settings. Designed for maintainable and scalable testing, it supports both GUI and planned CLI workflows.
 
 ---
 
