@@ -2,14 +2,26 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TestGenerator.Core.Common.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <GroupBox Header="Project Overview">
-            <TreeView x:Name="ProjectTreeView">
-
-            </TreeView >
+            <TreeView x:Name="ProjectTreeView" ItemsSource="{Binding TreeItems}">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type local:TreeItemViewModel}" ItemsSource="{Binding Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="OnCheckboxToggled" Unchecked="OnCheckboxToggled">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Icon}" FontFamily="Segoe MDL2 Assets" Margin="0,2.5,5,0"/>
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </CheckBox>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
         </GroupBox>
     </Grid>
 </UserControl>

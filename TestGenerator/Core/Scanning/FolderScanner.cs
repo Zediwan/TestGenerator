@@ -1,22 +1,52 @@
-﻿using TestGenerator.Core.Common.Models;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Shapes;
+using TestGenerator.Core.Common.Models;
 
 namespace TestGenerator.Core.Scanning;
 
 public static class FolderScanner
 {
-    public static void Scan(Folder folder)
+    public static ObservableCollection<TreeItemViewModel> Scan(DirectoryInfo directoryInfo)
     {
-        // TODO: add documentation that explains this part
-        if (folder.ParentFolder is { ParentFolder: not null })
-        {
-            folder.ProjectPath = folder.ParentFolder.ProjectPath + folder.ParentFolder.Name + "\\";
-        }
-        
+        var rootItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
 
-        folder.SubFolders = folder.DirectoryInfo.GetDirectories().Select(d => new Folder(d, folder)).ToArray();
-        folder.Files = folder.DirectoryInfo.GetFiles().Select(f => new File(f, folder)).ToArray();
-        
-        foreach (var subfolder in folder.SubFolders) Scan(subfolder);
-        foreach (var file in folder.Files) FileScanner.Scan(file);
+        foreach (var dir in directoryInfo.GetDirectories())
+        {
+            var child = ScanRecursively(dir);
+            if (child != null)
+                rootItem.Children.Add(child);
+        }
+
+        foreach (var file in directoryInfo.GetFiles("*.cs"))
+        {
+            rootItem.Children.Add(FileScanner.ScanCsFile(file));
+        }
+
+        return rootItem.Children.Any() ? [rootItem] : [];
     }
+
+
+    public static TreeItemViewModel? ScanRecursively(DirectoryInfo dir)
+    {
+        var dirItem = new TreeItemViewModel { Name = dir.Name, Tag = dir };
+
+        // Recursively scan subdirectories and only keep non-null results
+        foreach (var subDir in dir.GetDirectories())
+        {
+            var child = ScanRecursively(subDir);
+            if (child != null)
+                dirItem.Children.Add(child);
+        }
+
+        // Add .cs files in the current directory
+        foreach (var file in dir.GetFiles("*.cs"))
+        {
+            dirItem.Children.Add(FileScanner.ScanCsFile(file));
+        }
+
+        // Only return this directory if it has children (either subfolders or files)
+        return dirItem.Children.Any() ? dirItem : null;
+    }
+
 }

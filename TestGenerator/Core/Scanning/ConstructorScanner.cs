@@ -1,11 +1,21 @@
-﻿using TestGenerator.Core.Common.Models;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TestGenerator.Core.Common.Models;
 
 namespace TestGenerator.Core.Scanning;
 
 public class ConstructorScanner
 {
-    public static void Scan(Constructor constructor)
+    public static TreeItemViewModel ScanCsClass(ConstructorDeclarationSyntax constructor)
     {
+        return new TreeItemViewModel { Name = GetFormattedConstructorSignature(constructor), Tag = constructor};
+    }
 
+    private static string GetFormattedConstructorSignature(ConstructorDeclarationSyntax ctor)
+    {
+        var modifiers = string.Join(" ", ctor.Modifiers.Select(m => m.Text));
+        var parameters = ctor.ParameterList.Parameters
+            .Select(p => $"{p.Type?.ToFullString()?.Trim()} {p.Identifier.Text}");
+
+        return $"{modifiers} {ctor.Identifier.Text}({string.Join(", ", parameters)})";
     }
 }

@@ -59,10 +59,11 @@ public partial class MainWindow : Window
         // Call your generator
         System.Windows.MessageBox.Show("Test generation is not properly implemented yet.");
 
-        var exampleFile = ProjectOverview.rootFolder.SubFolders[2].SubFolders[3].Files[0];
-        var filePath = FileGenerator.Create(TestsFolderPath.Text, exampleFile, TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text);
-        var exampleMethod = exampleFile.Classes[0].Methods[0];
-        MethodGenerator.Generate(filePath, exampleMethod, TestSchema.MethodPrefix.Text, TestSchema.MethodSuffix.Text);
+        //var exampleFile = ProjectOverview.rootFolder.SubFolders[2].SubFolders[3].Files[0];
+        //var exampleMethod = exampleFile.Classes[0].Methods[0];
+
+        //var testFile = FileGenerator.Create(TestsFolderPath.Text, exampleFile, TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text);
+        //MethodGenerator.Generate(testFile, exampleMethod, TestSchema.MethodPrefix.Text, TestSchema.MethodSuffix.Text);
     }
 
     private void SelectTestFolder_Click(object sender, RoutedEventArgs e)

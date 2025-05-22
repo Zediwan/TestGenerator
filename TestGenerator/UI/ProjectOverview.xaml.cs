@@ -1,141 +1,43 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using TestGenerator.Core.Common.Models;
-using TestGenerator.Core.Generation;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
 using TestGenerator.Core.Scanning;
-using CheckBox = System.Windows.Controls.CheckBox;
-using Orientation = System.Windows.Controls.Orientation;
-using FontFamily = System.Windows.Media.FontFamily;
+using TestGenerator.Core.Common.Models;
 
-namespace TestGenerator.UI
+namespace TestGenerator.UI;
+
+public partial class ProjectOverview
 {
-    /// <summary>
-    /// Interaction logic for ProjectOverview.xaml
-    /// </summary>
-    public partial class ProjectOverview
+    public ObservableCollection<TreeItemViewModel> TreeItems { get; set; } = new();
+
+    public ProjectOverview()
     {
-        // Symbols
-        private static readonly FontFamily SymbolFontFamily = new("Segoe MDL2 Assets");
-        private static readonly Thickness SymbolMargin = new(0, 2.5, 5, 0);
+        InitializeComponent();
+        DataContext = this;
+    }
 
-        public Folder rootFolder;
+    public void Load(string path)
+    {
+        Clear();
 
-        public ProjectOverview()
-        {
-            InitializeComponent();
-        }
+        var directoryInfo = new DirectoryInfo(path);
+        TreeItems = FolderScanner.Scan(directoryInfo);
 
-        public void Load(string path)
-        {
-            Clear();
+        ProjectTreeView.ItemsSource = TreeItems;
+    }
 
-            rootFolder = DirectoryScanner.ScanDirectory(path);
-            ProjectTreeView.Items.Add(LoadFolder(rootFolder));
-        }
+    public void Clear()
+    {
+        ProjectTreeView.ItemsSource = null;
+        TreeItems.Clear();
+    }
 
-        public void Clear()
-        {
-            ProjectTreeView.Items.Clear();
-        }
-        
-        private static TreeViewItem LoadFolder(Folder folder)
-        {
-            var treeItem = CreateTreeItem(folder.ToString(), Folder.Icon);
+    private void OnCheckboxToggled(object sender, RoutedEventArgs e)
+    {
+        var checkbox = sender as System.Windows.Controls.CheckBox;
+        if (checkbox?.DataContext is not TreeItemViewModel currentItem) return;
 
-            foreach (var file in folder.Files)
-            {
-                treeItem.Items.Add(LoadFile(file));
-            }
-
-            foreach (var subfolder in folder.SubFolders)
-            {
-                treeItem.Items.Add(LoadFolder(subfolder));
-            }
-
-            return treeItem;
-        }
-
-        private static TreeViewItem LoadFile(File file)
-        {
-            var treeItem = CreateTreeItem(file.ToString(), File.Icon);
-
-            foreach (var cls in file.Classes)
-            {
-                treeItem.Items.Add(LoadClass(cls));
-            }
-
-            return treeItem;
-        }
-
-        private static TreeViewItem LoadClass(Class cls)
-        {
-            var treeItem = CreateTreeItem(cls.ToString(), Class.Icon);
-
-            foreach (var constructor in cls.Constructors)
-            {
-                treeItem.Items.Add(CreateTreeItem(constructor.ToString(), Constructor.Icon));
-            }
-
-            foreach (var property in cls.Properties)
-            {
-                treeItem.Items.Add(LoadProperty(property));
-            }
-
-            foreach (var method in cls.Methods)
-            {
-                treeItem.Items.Add(CreateTreeItem(method.ToString(), Method.Icon));
-            }
-
-            return treeItem;
-        }
-
-        private static TreeViewItem LoadProperty(Property prop)
-        {
-            var treeItem = CreateTreeItem(prop.ToString(), Property.Icon);
-
-            if (prop.Getter != null)
-            {
-                treeItem.Items.Add(CreateTreeItem(prop.Getter.ToString(), Method.Icon));
-            }
-
-            if (prop.Setter != null)
-            {
-                treeItem.Items.Add(CreateTreeItem(prop.Setter.ToString(), Method.Icon));
-            }
-
-            return treeItem;
-        }
-
-        private static TreeViewItem CreateTreeItem(string name, string symbol)
-        {
-            var stackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
-            stackPanel.Children.Add(new TextBlock() { FontFamily = SymbolFontFamily, Text = symbol, Margin = SymbolMargin });
-            stackPanel.Children.Add(new TextBlock() { Text = name });
-
-            var checkBox = new CheckBox() { Content = stackPanel };
-            checkBox.Checked += OnCheckboxToggled;
-            checkBox.Unchecked += OnCheckboxToggled;
-
-            var treeViewItem = new TreeViewItem() { Header = checkBox };
-
-            checkBox.Tag = treeViewItem;
-
-            return treeViewItem;
-        }
-
-        // TODO: if all children AND sub-children of an item are unchecked / checked then the same should count for the parent.
-        private static void OnCheckboxToggled(object sender, RoutedEventArgs e)
-        {
-            var checkbox = (CheckBox)sender;
-
-            if (checkbox.Tag is not TreeViewItem treeViewItem) return;
-            if (treeViewItem.Items.IsEmpty) return;
-
-            foreach (TreeViewItem item in treeViewItem.Items)
-            {
-                if (item.Header is not CheckBox childCheckbox) continue;
-                childCheckbox.IsChecked = checkbox.IsChecked;
-            }
-        }
+        foreach (var child in currentItem.Children)
+            child.IsChecked = currentItem.IsChecked;
     }
 }
