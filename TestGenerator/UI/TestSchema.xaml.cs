@@ -17,7 +17,7 @@ namespace TestGenerator.UI
 
         public bool CheckSchema()
         {
-            var canContinue = false;
+            var canContinue = true;
             if (!HasFileNaming)
             {
                 var result = MessageBox.Show(
