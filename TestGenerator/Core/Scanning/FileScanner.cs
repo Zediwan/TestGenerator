@@ -6,20 +6,11 @@ namespace TestGenerator.Core.Scanning;
 
 public static class FileScanner
 {
-    public static TreeItemViewModel ScanCsFile(FileInfo file)
+    public static TreeItemViewModel ScanCsFile(FileInfo fileInfo)
     {
-        var sourceCode = System.IO.File.ReadAllText(file.FullName);
-        var tree = CSharpSyntaxTree.ParseText(sourceCode);
-        var root = tree.GetCompilationUnitRoot();
+        var parsedFile = new ParsedFile(fileInfo);
 
-        var parsedFile = new ParsedFile
-        {
-            FileInfo = file,
-            SyntaxTree = tree,
-            SyntaxRoot = root
-        };
-
-        var fileNode = new TreeItemViewModel { Name = file.Name, Tag = parsedFile };
+        var fileNode = new TreeItemViewModel { Name = fileInfo.Name, Tag = parsedFile };
 
         foreach (var cls in parsedFile.Classes)
         {
