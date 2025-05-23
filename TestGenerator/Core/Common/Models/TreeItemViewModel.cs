@@ -74,4 +74,9 @@ public class TreeItemViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string? name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+    public bool SelfOrAnyChildrenSelected()
+    {
+        return IsChecked || Children.Any(child => child.SelfOrAnyChildrenSelected());
+    }
 }

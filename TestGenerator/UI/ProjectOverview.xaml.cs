@@ -3,12 +3,15 @@ using System.IO;
 using System.Windows;
 using TestGenerator.Core.Scanning;
 using TestGenerator.Core.Common.Models;
+using System.ComponentModel;
 
 namespace TestGenerator.UI;
 
 public partial class ProjectOverview
 {
-    public ObservableCollection<TreeItemViewModel> TreeItems { get; set; } = new();
+    public ObservableCollection<TreeItemViewModel> TreeItems { get; set; } = [];
+    public event EventHandler? AnyItemSelectedChanged;
+    public bool AnyItemSelected => TreeItems.Any(item => item.SelfOrAnyChildrenSelected());
 
     public ProjectOverview()
     {
@@ -24,6 +27,7 @@ public partial class ProjectOverview
         TreeItems = FolderScanner.Scan(directoryInfo);
 
         ProjectTreeView.ItemsSource = TreeItems;
+        SubscribeToTreeItems(TreeItems);
     }
 
     public void Clear()
@@ -76,4 +80,20 @@ public partial class ProjectOverview
 
         return selectedItems;
     }
+
+    private void SubscribeToTreeItems(IEnumerable<TreeItemViewModel> items)
+    {
+        foreach (var item in items)
+        {
+            item.PropertyChanged += TreeItem_PropertyChanged;
+            SubscribeToTreeItems(item.Children);
+        }
+    }
+
+    private void TreeItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(TreeItemViewModel.IsChecked))
+            AnyItemSelectedChanged?.Invoke(this, EventArgs.Empty);
+    }
+
 }
