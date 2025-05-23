@@ -8,13 +8,38 @@ namespace TestGenerator.Core.Generation;
 public class FileGenerator(string prefix, string suffix, string pathToTestRootFolder, string pathToSourceRootFolder)
 {
     // Paths
+    // TODO: figure out the best practice to keep them consistent across Generators
+
+    /// <summary>
+    /// Gets or sets the path to the root folder of the source code.
+    /// </summary>
     public string PathToSourceRootFolder = pathToSourceRootFolder;
+
+    /// <summary>
+    /// Gets or sets the path to the root folder of the test code.
+    /// </summary>
     public string PathToTestRootFolder = pathToTestRootFolder;
 
     // File Naming
+
+    /// <summary>
+    /// Gets or sets the prefix to be added to the file name.
+    /// </summary>
     public string Prefix = prefix;
+
+    /// <summary>
+    /// Gets or sets the suffix to be added to the file name.
+    /// </summary>
     public string Suffix = suffix;
 
+    /// <summary>
+    /// Creates a test file based on the provided <see cref="ParsedFile"/> information.
+    /// Ensures the directory and file exist, creating them if necessary.
+    /// </summary>
+    /// <param name="file">The <see cref="ParsedFile"/> representing the source file to generate a test for.</param>
+    /// <returns>A <see cref="ParsedFile"/> representing the generated or existing test file.</returns>
+    /// <exception cref="InvalidDataException">Thrown if the file is not a C# file.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if the directory name cannot be determined.</exception>
     public ParsedFile Create(ParsedFile file)
     {
         #region FileName
