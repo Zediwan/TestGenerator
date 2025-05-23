@@ -1,7 +1,8 @@
 ﻿using System.IO;
-using System.Reflection;
+using System.Windows;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TestGenerator.Core.Common.Models;
+using MessageBox = System.Windows.MessageBox;
 
 namespace TestGenerator.Core.Generation;
 
@@ -40,9 +41,9 @@ public class Generator(string pathToTestRootFolder, string pathToSourceRootFolde
                     var result = MessageBox.Show(
                         "You haven't set any Prefix or Suffix for the Test File Names. Are you sure you want to continue?",
                         "Warning",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question);
-                    if (result == DialogResult.No) return;
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+                    if (result == MessageBoxResult.No) return;
                 }
                 FileGenerator.Create(parsedFile);
                 break;
