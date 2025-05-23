@@ -31,9 +31,7 @@ public class TreeItemViewModel : INotifyPropertyChanged
             {
                 foreach (var child in Children)
                 {
-                    child._isInternalChange = true;
                     child.IsChecked = value;
-                    child._isInternalChange = false;
                 }
             }
 
