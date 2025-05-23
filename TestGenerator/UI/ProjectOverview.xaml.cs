@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows;
 using TestGenerator.Core.Scanning;
 using TestGenerator.Core.Common.Models;
 using System.ComponentModel;

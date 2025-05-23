@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TestGenerator.Core.Common.Models;
 
