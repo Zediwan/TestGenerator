@@ -55,11 +55,10 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
-                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="ScanButton" Grid.Column="0" Content="Scan" Margin="5" IsEnabled="false" Click="ScanButton_Click"/>
-                                <Button x:Name="ClearButton" Grid.Column="1" Content="Clear" Margin="5" IsEnabled="false" Click="ClearButton_Click"/>
-                                <Button Grid.Column="2" x:Name="GenerateButton" Content="Generate" Margin="5" Click="GenerateButton_Click"
+                                <Button x:Name="ScanButton" Grid.Column="0" Content="Scan" Margin="5" Click="ScanButton_Click"
+                                        IsEnabled="{Binding CanScan, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                <Button x:Name="GenerateButton" Grid.Column="1" Content="Generate" Margin="5" Click="GenerateButton_Click"
                                         IsEnabled="{Binding CanGenerate, RelativeSource={RelativeSource AncestorType=Window}}" />
                             </Grid>
                         </GroupBox>

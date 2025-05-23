@@ -7,7 +7,6 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace TestGenerator.UI;
 
-// TODO: rework the UI handling methods with bindings
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
     public MainWindow()
@@ -15,10 +14,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         InitializeComponent();
         TestsFolderPath.TextChanged += (s, e) => OnPropertyChanged(nameof(CanGenerate));
         ProjectOverview.AnyItemSelectedChanged += (s, e) => OnPropertyChanged(nameof(CanGenerate));
+        SrcFolderPath.TextChanged += (s, e) => OnPropertyChanged(nameof(CanScan));
     }
+
+    #region Binding Properties
 
     public bool CanGenerate =>
         !string.IsNullOrEmpty(TestsFolderPath.Text) && ProjectOverview.AnyItemSelected;
+
+    public bool CanScan => !string.IsNullOrEmpty(SrcFolderPath.Text);
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -27,14 +31,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-    private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)
-    {
-        var dialog = new FolderBrowserDialog();
+    #endregion
 
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) SrcFolderPath.Text = dialog.SelectedPath;
-
-        ScanButton.IsEnabled = !string.IsNullOrEmpty(SrcFolderPath.Text);
-    }
+    #region Buttons
 
     private void ScanButton_Click(object sender, RoutedEventArgs e)
     {
@@ -53,15 +52,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         ProjectOverview.Load(path);
 
         ClearButton.IsEnabled = true;
-    }
-
-    private void ClearButton_Click(object sender, RoutedEventArgs e)
-    {
-        ProjectOverview.Clear();
-        SrcFolderPath.Text = string.Empty;
-        TestsFolderPath.Text = string.Empty;
-        ScanButton.IsEnabled = false;
-        ClearButton.IsEnabled = false;
     }
 
     private void GenerateButton_Click(object sender, RoutedEventArgs e)
@@ -88,10 +78,21 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         generator.Generate(items);
     }
 
+    #endregion
+
+    #region FolderSelection
+
+    private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new FolderBrowserDialog();
+        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) SrcFolderPath.Text = dialog.SelectedPath;
+    }
+
     private void SelectTestFolder_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new FolderBrowserDialog();
-
         if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) TestsFolderPath.Text = dialog.SelectedPath;
     }
+
+    #endregion
 }
