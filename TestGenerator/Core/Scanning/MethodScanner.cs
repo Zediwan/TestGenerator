@@ -17,6 +17,6 @@ public class MethodScanner
 
         return $"{string.Join(" ", methodDeclarationSyntax.Modifiers.Select(m => m.Text))} " +
                $"{methodDeclarationSyntax.ReturnType.ToFullString().Trim()} " +
-               $"{methodDeclarationSyntax.Identifier.Text}({string.Join(", ", parameters)})"; ;
+               $"{methodDeclarationSyntax.Identifier.Text}({string.Join(", ", parameters)})";
     }
 }
