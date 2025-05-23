@@ -77,11 +77,17 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             return;
         }
 
-        var generator = new Generator(path, SrcFolderPath.Text)
-        {
-            FileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path,
-                SrcFolderPath.Text)
-        };
+        TestSchema.CheckSchema();
+
+        #region Generators
+
+        var generator = new Generator(path, SrcFolderPath.Text);
+
+        var fileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path,
+            SrcFolderPath.Text);
+        generator.FileGenerator = fileGenerator;
+
+        #endregion
 
         var items = ProjectOverview.GetCheckedItems(ProjectOverview.TreeItems);
 
