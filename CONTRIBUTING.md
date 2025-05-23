@@ -18,9 +18,9 @@ We’re excited to collaborate with you on building a faster and more structured
    git clone https://github.com/Zediwan/TestGenerator.git
    cd TestGenerator
    ```
-2. Switch to the development branch:
+2. Switch to the main branch:
    ```bash
-   git checkout dev
+   git checkout main
    ```
 3. Open the solution in your IDE and build it to restore dependencies.
 
@@ -39,7 +39,7 @@ We work issue-first and branch-per-feature. Here’s the standard flow:
 
 4. If possible try to make an estimate on complexity, time estimate, estimated end and set status to "in progress". (Try to fill as many elements from the project as possible)
 
-5. **Create a branch** from `dev` using the following format:
+5. **Create a branch** from `main` using the following format:
    ```bash
    git checkout -b <number>-short-description
    # example: 12-add-cli-flag
@@ -59,7 +59,7 @@ We work issue-first and branch-per-feature. Here’s the standard flow:
    git push origin 12-add-cli-flag
    ```
 
-10. Open a Pull Request targeting `dev`.
+10. Open a Pull Request targeting `main`.
 
 ---
 
