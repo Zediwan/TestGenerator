@@ -1,13 +1,26 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using TestGenerator.Core.Generation;
 
 namespace TestGenerator.UI;
 
-public partial class MainWindow : Window
+// TODO: rework the UI handling methods with bindings
+public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+    public bool CanGenerate =>
+        !string.IsNullOrEmpty(TestsFolderPath.Text) && ProjectOverview.AnyItemSelected;
+
     public MainWindow()
     {
         InitializeComponent();
+        TestsFolderPath.TextChanged += (s, e) => OnPropertyChanged(nameof(CanGenerate));
+        ProjectOverview.AnyItemSelectedChanged += (s, e) => OnPropertyChanged(nameof(CanGenerate));
     }
 
     private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)
@@ -44,7 +57,6 @@ public partial class MainWindow : Window
         TestsFolderPath.Text = string.Empty;
         ScanButton.IsEnabled = false;
         ClearButton.IsEnabled = false;
-        GenerateButton.IsEnabled = false;
     }
 
     private void GenerateButton_Click(object sender, RoutedEventArgs e)
@@ -52,11 +64,26 @@ public partial class MainWindow : Window
         var path = TestsFolderPath.Text;
         if (!Directory.Exists(path))
         {
-            System.Windows.MessageBox.Show("Invalid folder path.");
+            System.Windows.MessageBox.Show($"Invalid folder path: {path}");
             return;
         }
         // Call your generator
-        System.Windows.MessageBox.Show("Test generation is not implemented yet.");
+        System.Windows.MessageBox.Show("Test generation is not properly implemented yet.");
+
+        var generator = new Generator(path, SrcFolderPath.Text)
+        {
+            FileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path, SrcFolderPath.Text),
+        };
+
+        var items = ProjectOverview.GetCheckedItems(ProjectOverview.TreeItems);
+
+        generator.Generate(items);
+
+        //var exampleFile = rootFolder?.GetDirectories()[2].GetDirectories()[3].GetFiles()[0];
+        //var exampleMethod = exampleFile.Classes[0].Methods[0];
+
+        //var testFile = FileGenerator.Create(TestsFolderPath.Text, exampleFile, TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text);
+        //MethodGenerator.Generate(testFile, exampleMethod, TestSchema.MethodPrefix.Text, TestSchema.MethodSuffix.Text);
     }
 
     private void SelectTestFolder_Click(object sender, RoutedEventArgs e)
@@ -67,8 +94,5 @@ public partial class MainWindow : Window
         {
             TestsFolderPath.Text = dialog.SelectedPath;
         }
-
-        // TODO: this should only be enabled if the source folder and target folder are set and some items are selected
-        GenerateButton.IsEnabled = !string.IsNullOrEmpty(TestsFolderPath.Text);
     }
 }
