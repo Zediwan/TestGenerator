@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using TestGenerator.Core.Generation;
+using MessageBox = System.Windows.MessageBox;
 
 namespace TestGenerator.UI;
 
@@ -41,7 +42,11 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         if (!Directory.Exists(path))
         {
-            System.Windows.MessageBox.Show("Invalid folder path.");
+            MessageBox.Show(
+                $"Invalid folder path: {path}",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
 
@@ -64,11 +69,13 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         var path = TestsFolderPath.Text;
         if (!Directory.Exists(path))
         {
-            System.Windows.MessageBox.Show($"Invalid folder path: {path}");
+            MessageBox.Show(
+                $"Invalid folder path: {path}",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
-        // Call your generator
-        System.Windows.MessageBox.Show("Test generation is not properly implemented yet.");
 
         var generator = new Generator(path, SrcFolderPath.Text)
         {
@@ -78,12 +85,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         var items = ProjectOverview.GetCheckedItems(ProjectOverview.TreeItems);
 
         generator.Generate(items);
-
-        //var exampleFile = rootFolder?.GetDirectories()[2].GetDirectories()[3].GetFiles()[0];
-        //var exampleMethod = exampleFile.Classes[0].Methods[0];
-
-        //var testFile = FileGenerator.Create(TestsFolderPath.Text, exampleFile, TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text);
-        //MethodGenerator.Generate(testFile, exampleMethod, TestSchema.MethodPrefix.Text, TestSchema.MethodSuffix.Text);
     }
 
     private void SelectTestFolder_Click(object sender, RoutedEventArgs e)

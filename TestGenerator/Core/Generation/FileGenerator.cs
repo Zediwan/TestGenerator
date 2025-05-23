@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Windows;
 using TestGenerator.Core.Common.Models;
+using MessageBox = System.Windows.MessageBox;
 
 namespace TestGenerator.Core.Generation;
 
@@ -40,8 +42,12 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
             throw new InvalidOperationException("The directory name could not be determined. Ensure the file path is not a root path.");
         if (!Directory.Exists(directoryName))
         {
-            MessageBox.Show("Directory has been created at: " + directoryName);
             Directory.CreateDirectory(directoryName);
+            MessageBox.Show(
+                "Directory has been created at: " + directoryName,
+                "Directory Creation",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
         }
 
         #endregion
@@ -52,10 +58,18 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
         {
             // If the file does not exist create it
             using (File.Create(filePath));
-            System.Windows.MessageBox.Show("File has been created at: " + filePath);
+            MessageBox.Show(
+                "File has been created at: " + filePath,
+                "File Creation",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
         }
         else
-            System.Windows.MessageBox.Show("File already exists: " + filePath);
+            MessageBox.Show(
+                "File already exists: " + filePath,
+                "File Creation",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
 
         #endregion
 
