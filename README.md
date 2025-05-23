@@ -7,23 +7,25 @@
 ## 🚀 Features
 
 ### 🧠 Element Detection
-The generator parses and extracts rich information from:
-- **Files** → Classes
-- **Classes** → Modifiers, Fields, Methods, Properties, Constructors
-- **Constructors** → Modifiers, Parameters
-- **Properties** → Type, Modifier, Getter/Setter
-- **Methods** → Return Type, Modifiers, Parameters
+The generator parses and extracts information from:
+- **Files**
+- **Classes**
+- **Constructors**
+- **Properties**
+- **Methods**
 
 ---
 
 ### ✅ Current Features
 - **Path Selector Interface**
 - **Source Directory Scanner**
+- **File Creation using User defined Naming**
 
 ---
 
 ### 🧭 Roadmap (Planned)
-- [ ] Test File Generation
+- [X] Test File Creation
+- [ ] Test File Code Generation
 - [ ] Customizable Structure
 - [ ] Log Terminal in UI
 - [ ] Preview Test Output before generation  
@@ -40,32 +42,7 @@ See the full roadmap here: [📌 GitHub Project Board](https://github.com/users/
 
 ## 🤝 Contributing
 
-We love contributors! Here's how to get started:
-
-### 🧭 Where to Start
-- Browse the [issues](https://github.com/Zediwan/TestGenerator/issues), especially those labeled [`good first issue`](https://github.com/Zediwan/TestGenerator/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
-- Ask questions in the [Discussions](https://github.com/Zediwan/TestGenerator/discussions).
-
-### 🧵 Branching Flow
-1. Make sure you're on the `dev` branch.
-2. Create a feature branch with the pattern:
-   ```
-   <number>-description
-   ```
-   Example:
-   ```
-   12-fix-null-methods
-   ```
-
-3. Mention the issue in your PR or commit:
-   ```
-   Fixes #12
-   ```
-
-This links the PR to the issue and closes it upon merge.
-
-### 🧪 Testing
-If your change includes core logic, add unit tests under `TestGenerator.Tests`.
+We love contributors! [Here](CONTRIBUTIONS.md)'s how to get started:
 
 ---
 
