@@ -30,10 +30,10 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Prefix:" Margin="5,5,20,0" FontSize="10"/>
-                            <TextBox x:Name="FilePrefix" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" Text ="Prefix"/>
+                            <TextBox x:Name="FilePrefix" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" Text =""/>
 
                             <TextBlock Grid.Column="0" Grid.Row="1" Text="Suffix:" Margin="5,0,20,0" FontSize="10"/>
-                            <TextBox x:Name="FileSuffix" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" Text="Suffix"/>
+                            <TextBox x:Name="FileSuffix" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" Text=""/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="Example">
@@ -89,10 +89,10 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Prefix:" Margin="5,5,20,0" FontSize="10"/>
-                            <TextBox x:Name="MethodPrefix" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" Text ="Prefix"/>
+                            <TextBox x:Name="MethodPrefix" Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" Text =""/>
 
                             <TextBlock Grid.Column="0" Grid.Row="1" Text="Suffix:" Margin="5,0,20,0" FontSize="10"/>
-                            <TextBox x:Name="MethodSuffix" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" Text="Suffix"/>
+                            <TextBox x:Name="MethodSuffix" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" Text=""/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="Example">
