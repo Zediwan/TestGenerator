@@ -50,8 +50,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
 
         ProjectOverview.Load(path);
-
-        ClearButton.IsEnabled = true;
     }
 
     private void GenerateButton_Click(object sender, RoutedEventArgs e)
