@@ -42,12 +42,12 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
             throw new InvalidOperationException("The directory name could not be determined. Ensure the file path is not a root path.");
         if (!Directory.Exists(directoryName))
         {
+            Directory.CreateDirectory(directoryName);
             MessageBox.Show(
                 "Directory has been created at: " + directoryName,
                 "Directory Creation",
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
-            Directory.CreateDirectory(directoryName);
         }
 
         #endregion
