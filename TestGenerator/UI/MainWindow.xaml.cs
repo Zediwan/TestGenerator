@@ -51,6 +51,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private void GenerateButton_Click(object sender, RoutedEventArgs e)
     {
         var path = TestsFolderPath.Text;
+
         if (!Directory.Exists(path))
         {
             MessageBoxHelper.ShowInvalidFolderPath();
