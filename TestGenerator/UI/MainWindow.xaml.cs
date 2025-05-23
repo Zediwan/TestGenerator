@@ -77,11 +77,25 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             return;
         }
 
-        var generator = new Generator(path, SrcFolderPath.Text)
+        if (!TestSchema.CheckSchema())
         {
-            FileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path,
-                SrcFolderPath.Text)
-        };
+            MessageBox.Show(
+                "Schema validation failed. Please check your configuration and try again.",
+                "Validation Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
+        }
+
+        #region Generators
+
+        var generator = new Generator(path, SrcFolderPath.Text);
+
+        var fileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path,
+            SrcFolderPath.Text);
+        generator.FileGenerator = fileGenerator;
+
+        #endregion
 
         var items = ProjectOverview.GetCheckedItems(ProjectOverview.TreeItems);
 
