@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using TestGenerator.Core.Generation;
-using MessageBox = System.Windows.MessageBox;
+using TestGenerator.UI.Helpers;
 
 namespace TestGenerator.UI;
 
@@ -41,11 +41,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         if (!Directory.Exists(path))
         {
-            MessageBox.Show(
-                $"Invalid folder path: {path}",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            MessageBoxHelper.ShowInvalidFolderPath();
             return;
         }
 
@@ -57,23 +53,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         var path = TestsFolderPath.Text;
         if (!Directory.Exists(path))
         {
-            MessageBox.Show(
-                $"Invalid folder path: {path}",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            MessageBoxHelper.ShowInvalidFolderPath();
             return;
         }
 
         if (!TestSchema.CheckSchema())
-        {
-            MessageBox.Show(
-                "Schema validation failed. Please check your configuration and try again.",
-                "Validation Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
             return;
-        }
 
         #region Generators
 

@@ -1,8 +1,6 @@
 ﻿using System.IO;
-using System.Windows;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TestGenerator.Core.Common.Models;
-using MessageBox = System.Windows.MessageBox;
 
 namespace TestGenerator.Core.Generation;
 

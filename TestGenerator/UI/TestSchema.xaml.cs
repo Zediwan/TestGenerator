@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using MessageBox = System.Windows.MessageBox;
+﻿using TestGenerator.UI.Helpers;
 
 namespace TestGenerator.UI
 {
@@ -18,16 +17,9 @@ namespace TestGenerator.UI
         public bool CheckSchema()
         {
             var canContinue = true;
+
             if (!HasFileNaming)
-            {
-                var result = MessageBox.Show(
-                    "You haven't set any Prefix or Suffix for the Test File Names. Are you sure you want to continue?",
-                    "Warning",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                    canContinue = true;
-            }
+                canContinue = canContinue && MessageBoxHelper.ConfirmFileNaming();
 
             return canContinue;
         }

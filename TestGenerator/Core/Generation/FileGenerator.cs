@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using TestGenerator.Core.Common.Models;
-using MessageBox = System.Windows.MessageBox;
+using TestGenerator.UI.Helpers;
 
 namespace TestGenerator.Core.Generation;
 
@@ -69,11 +69,7 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
         if (!Directory.Exists(directoryName))
         {
             Directory.CreateDirectory(directoryName);
-            MessageBox.Show(
-                "Directory has been created at: " + directoryName,
-                "Directory Creation",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            MessageBoxHelper.DirectoryCreated(directoryName);
         }
 
         #endregion
@@ -88,20 +84,10 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
                 ;
             }
 
-            MessageBox.Show(
-                "File has been created at: " + filePath,
-                "File Creation",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            MessageBoxHelper.FileCreated(filePath);
         }
         else
-        {
-            MessageBox.Show(
-                "File already exists: " + filePath,
-                "File Creation",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
-        }
+            MessageBoxHelper.FileAlreadyExists(filePath);
 
         #endregion
 
