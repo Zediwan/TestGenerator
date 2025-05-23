@@ -40,7 +40,11 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
             throw new InvalidOperationException("The directory name could not be determined. Ensure the file path is not a root path.");
         if (!Directory.Exists(directoryName))
         {
-            MessageBox.Show("Directory has been created at: " + directoryName);
+            MessageBox.Show(
+                "Directory has been created at: " + directoryName,
+                "Directory Creation",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             Directory.CreateDirectory(directoryName);
         }
 
@@ -52,10 +56,18 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
         {
             // If the file does not exist create it
             using (File.Create(filePath));
-            System.Windows.MessageBox.Show("File has been created at: " + filePath);
+            MessageBox.Show(
+                "File has been created at: " + filePath,
+                "File Creation",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
         else
-            System.Windows.MessageBox.Show("File already exists: " + filePath);
+            MessageBox.Show(
+                "File already exists: " + filePath,
+                "File Creation",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
 
         #endregion
 
