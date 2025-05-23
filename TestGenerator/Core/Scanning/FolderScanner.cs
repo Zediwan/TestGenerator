@@ -1,15 +1,58 @@
-﻿using TestGenerator.Core.Common.Models;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using TestGenerator.Core.Common.Models;
 
 namespace TestGenerator.Core.Scanning;
 
 public static class FolderScanner
 {
-    public static void Scan(Folder folder)
+    public static ObservableCollection<TreeItemViewModel> Scan(DirectoryInfo directoryInfo)
     {
-        folder.SubFolders = folder.DirectoryInfo.GetDirectories().Select(d => new Folder(d)).ToArray();
-        folder.Files = folder.DirectoryInfo.GetFiles().Select(f => new File(f)).ToArray();
-        
-        foreach (var subfolder in folder.SubFolders) Scan(subfolder);
-        foreach (var file in folder.Files) FileScanner.Scan(file);
+        var rootItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
+
+        foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
+        {
+            var child = ScanRecursively(subDirectoryInfo);
+            if (child == null) continue;
+
+            child.Parent = rootItem;
+            rootItem.Children.Add(child);
+        }
+
+        foreach (var file in directoryInfo.GetFiles("*.cs"))
+        {
+            var child = FileScanner.ScanCsFile(file);
+            child.Parent = rootItem;
+            rootItem.Children.Add(child);
+        }
+
+        return rootItem.Children.Any() ? [rootItem] : [];
+    }
+
+
+    public static TreeItemViewModel? ScanRecursively(DirectoryInfo directoryInfo)
+    {
+        var dirItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
+
+        // Recursively scan subdirectories and only keep non-null results
+        foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
+        {
+            var child = ScanRecursively(subDirectoryInfo);
+            if (child == null) continue;
+
+            child.Parent = dirItem;
+            dirItem.Children.Add(child);
+        }
+
+        // Add .cs files in the current directory
+        foreach (var file in directoryInfo.GetFiles("*.cs"))
+        {
+            var child = FileScanner.ScanCsFile(file);
+            child.Parent = dirItem;
+            dirItem.Children.Add(child);
+        }
+
+        // Only return this directory if it has children (either subfolders or files)
+        return dirItem.Children.Any() ? dirItem : null;
     }
 }

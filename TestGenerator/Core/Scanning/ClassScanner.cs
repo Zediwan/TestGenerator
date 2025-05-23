@@ -5,26 +5,39 @@ namespace TestGenerator.Core.Scanning;
 
 public class ClassScanner
 {
-    public static void Scan(Class cls)
+    public static TreeItemViewModel ScanCsClass(ClassDeclarationSyntax classDeclarationSyntax)
     {
-        cls.Modifiers = cls.Syntax.Modifiers.Select(m => m.ToString()).ToList();
+        var classNode = new TreeItemViewModel { Name = classDeclarationSyntax.Identifier.Text, Tag = classDeclarationSyntax };
 
-        cls.Constructors = cls.Syntax.DescendantNodes()
-            .OfType<ConstructorDeclarationSyntax>()
-            .Select(cm => new Constructor(cm))
-            .ToList();
-        cls.Methods = cls.Syntax.DescendantNodes()
-            .OfType<MethodDeclarationSyntax>()
-            .Select(m => new Method(m))
-            .ToList();
-        cls.Fields = cls.Syntax.DescendantNodes().OfType<FieldDeclarationSyntax>().ToList();
-        cls.Properties = cls.Syntax.DescendantNodes()
-            .OfType<PropertyDeclarationSyntax>()
-            .Select(p => new Property(p))
-            .ToList();
+        foreach (var method in classDeclarationSyntax.Members.OfType<MethodDeclarationSyntax>())
+        {
+            var child = MethodScanner.ScanCsMethod(method);
+            child.Parent = classNode;
+            classNode.Children.Add(child);
+        }
 
-        foreach (var constructor in cls.Constructors) ConstructorScanner.Scan(constructor);
-        foreach (var method in cls.Methods) MethodScanner.Scan(method);
-        foreach (var property in cls.Properties) PropertyScanner.Scan(property);
+        foreach (var property in classDeclarationSyntax.Members.OfType<PropertyDeclarationSyntax>())
+        {
+            var child = PropertyScanner.ScanCsProperty(property);
+            child.Parent = classNode;
+            classNode.Children.Add(child);
+        }
+
+        foreach (var constructor in classDeclarationSyntax.Members.OfType<ConstructorDeclarationSyntax>())
+        {
+            var child = ConstructorScanner.ScanCsConstructor(constructor);
+            child.Parent = classNode;
+            classNode.Children.Add(child);
+        }
+
+        return classNode;
+    }
+
+    // TODO: this should use the semantic model
+    // TODO: test this method
+    public static MethodDeclarationSyntax? FindMethod(MethodDeclarationSyntax methodDeclarationSyntax, ClassDeclarationSyntax classDeclarationSyntax)
+    {
+        return classDeclarationSyntax.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            .FirstOrDefault(m => m.Identifier == methodDeclarationSyntax.Identifier);
     }
 }
