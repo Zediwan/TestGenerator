@@ -5,9 +5,9 @@ namespace TestGenerator.Core.Scanning;
 
 public class ConstructorScanner
 {
-    public static TreeItemViewModel ScanCsConstructor(ConstructorDeclarationSyntax constructor)
+    public static TreeItemViewModel ScanCsConstructor(ConstructorDeclarationSyntax constructorDeclarationSyntax)
     {
-        return new TreeItemViewModel { Name = GetFormattedConstructorSignature(constructor), Tag = constructor};
+        return new TreeItemViewModel { Name = GetFormattedConstructorSignature(constructorDeclarationSyntax), Tag = constructorDeclarationSyntax};
     }
 
     private static string GetFormattedConstructorSignature(ConstructorDeclarationSyntax ctor)

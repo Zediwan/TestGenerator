@@ -5,20 +5,20 @@ namespace TestGenerator.Core.Scanning;
 
 public class PropertyScanner
 {
-    public static TreeItemViewModel ScanCsProperty(PropertyDeclarationSyntax prop)
+    public static TreeItemViewModel ScanCsProperty(PropertyDeclarationSyntax propertyDeclarationSyntax)
     {
-        var type = prop.Type?.ToFullString().Trim() ?? "object";
-        var name = prop.Identifier.Text;
-        var modifiers = string.Join(" ", prop.Modifiers.Select(m => m.Text));
+        var type = propertyDeclarationSyntax.Type?.ToFullString().Trim() ?? "object";
+        var name = propertyDeclarationSyntax.Identifier.Text;
+        var modifiers = string.Join(" ", propertyDeclarationSyntax.Modifiers.Select(m => m.Text));
         var propLabel = $"{modifiers} {type} {name}".Trim();
 
         var propNode = new TreeItemViewModel
         {
             Name = propLabel,
-            Tag = prop // full property
+            Tag = propertyDeclarationSyntax // full property
         };
 
-        if (prop.ExpressionBody != null)
+        if (propertyDeclarationSyntax.ExpressionBody != null)
         {
             propNode.Children.Add(new TreeItemViewModel
             {
@@ -28,9 +28,9 @@ public class PropertyScanner
             return propNode;
         }
 
-        if (prop.AccessorList == null) return propNode;
+        if (propertyDeclarationSyntax.AccessorList == null) return propNode;
 
-        foreach (var accessorNode in prop.AccessorList.Accessors.Select(accessor => new TreeItemViewModel
+        foreach (var accessorNode in propertyDeclarationSyntax.AccessorList.Accessors.Select(accessor => new TreeItemViewModel
                  {
                      Name = accessor.Keyword.Text,
                      Tag = accessor,

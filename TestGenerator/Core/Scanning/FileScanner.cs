@@ -34,15 +34,15 @@ public static class FileScanner
 
     // TODO: this should use the semantic model
     // TODO: test this method
-    public static MethodDeclarationSyntax? FindMethod(MethodDeclarationSyntax method, ParsedFile file)
+    public static MethodDeclarationSyntax? FindMethod(MethodDeclarationSyntax methodDeclarationSyntax, ParsedFile parsedFile)
     {
-        return file.Methods.FirstOrDefault(m => m.Identifier == method.Identifier); ;
+        return parsedFile.Methods.FirstOrDefault(m => m.Identifier == methodDeclarationSyntax.Identifier); ;
     }
 
     // TODO: this should use the semantic model
     // TODO: test this method
-    public static ClassDeclarationSyntax? FindClass(ClassDeclarationSyntax cls, ParsedFile file)
+    public static ClassDeclarationSyntax? FindClass(ClassDeclarationSyntax classDeclarationSyntax, ParsedFile parsedFile)
     {
-        return file.Classes.FirstOrDefault(c => c.Identifier == cls.Identifier);
+        return parsedFile.Classes.FirstOrDefault(c => c.Identifier == classDeclarationSyntax.Identifier);
     }
 }

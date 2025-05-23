@@ -10,9 +10,9 @@ public static class FolderScanner
     {
         var rootItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
 
-        foreach (var dir in directoryInfo.GetDirectories())
+        foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
         {
-            var child = ScanRecursively(dir);
+            var child = ScanRecursively(subDirectoryInfo);
             if (child == null) continue;
 
             child.Parent = rootItem;
@@ -30,14 +30,14 @@ public static class FolderScanner
     }
 
 
-    public static TreeItemViewModel? ScanRecursively(DirectoryInfo dir)
+    public static TreeItemViewModel? ScanRecursively(DirectoryInfo directoryInfo)
     {
-        var dirItem = new TreeItemViewModel { Name = dir.Name, Tag = dir };
+        var dirItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
 
         // Recursively scan subdirectories and only keep non-null results
-        foreach (var subDir in dir.GetDirectories())
+        foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
         {
-            var child = ScanRecursively(subDir);
+            var child = ScanRecursively(subDirectoryInfo);
             if (child == null) continue;
 
             child.Parent = dirItem;
@@ -45,7 +45,7 @@ public static class FolderScanner
         }
 
         // Add .cs files in the current directory
-        foreach (var file in dir.GetFiles("*.cs"))
+        foreach (var file in directoryInfo.GetFiles("*.cs"))
         {
             var child = FileScanner.ScanCsFile(file);
             child.Parent = dirItem;
@@ -55,5 +55,4 @@ public static class FolderScanner
         // Only return this directory if it has children (either subfolders or files)
         return dirItem.Children.Any() ? dirItem : null;
     }
-
 }
