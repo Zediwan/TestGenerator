@@ -42,7 +42,7 @@ See the full roadmap here: [📌 GitHub Project Board](https://github.com/users/
 
 ## 🤝 Contributing
 
-We love contributors! [Here](CONTRIBUTIONS.md)'s how to get started:
+We love contributors! [Here](CONTRIBUTING.md)'s how to get started:
 
 ---
 
