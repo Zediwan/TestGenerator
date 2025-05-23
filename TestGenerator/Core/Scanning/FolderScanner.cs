@@ -8,7 +8,7 @@ public static class FolderScanner
 {
     public static ObservableCollection<TreeItemViewModel> Scan(DirectoryInfo directoryInfo)
     {
-        var rootItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
+        var rootItem = new TreeItemViewModel(directoryInfo.Name, directoryInfo);
 
         foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
         {
@@ -32,7 +32,7 @@ public static class FolderScanner
 
     public static TreeItemViewModel? ScanRecursively(DirectoryInfo directoryInfo)
     {
-        var dirItem = new TreeItemViewModel { Name = directoryInfo.Name, Tag = directoryInfo };
+        var dirItem = new TreeItemViewModel(directoryInfo.Name, directoryInfo);
 
         // Recursively scan subdirectories and only keep non-null results
         foreach (var subDirectoryInfo in directoryInfo.GetDirectories())

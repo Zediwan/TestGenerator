@@ -8,16 +8,13 @@ namespace TestGenerator.Core.Generation;
 
 public class Generator(string pathToTestRootFolder, string pathToSourceRootFolder)
 {
-    string PathToSourceRootFolder { get; } = pathToSourceRootFolder;
-    string PathToTestRootFolder { get; } = pathToTestRootFolder;
     public FileGenerator? FileGenerator;
+    private string PathToSourceRootFolder { get; } = pathToSourceRootFolder;
+    private string PathToTestRootFolder { get; } = pathToTestRootFolder;
 
     public void Generate(List<TreeItemViewModel> items)
     {
-        foreach (var treeItemViewModel in items)
-        {
-            Generate(treeItemViewModel);
-        }
+        foreach (var treeItemViewModel in items) Generate(treeItemViewModel);
     }
 
     private void Generate(TreeItemViewModel item)
@@ -26,10 +23,7 @@ public class Generator(string pathToTestRootFolder, string pathToSourceRootFolde
         switch (obj)
         {
             case DirectoryInfo directoryInfo:
-                foreach (var child in item.Children)
-                {
-                    Generate(child);
-                }
+                foreach (var child in item.Children) Generate(child);
                 break;
             case ParsedFile parsedFile:
                 if (FileGenerator == null)
@@ -45,6 +39,7 @@ public class Generator(string pathToTestRootFolder, string pathToSourceRootFolde
                         MessageBoxImage.Question);
                     if (result == MessageBoxResult.No) return;
                 }
+
                 FileGenerator.Create(parsedFile);
                 break;
             case MethodDeclarationSyntax methodSyntax:

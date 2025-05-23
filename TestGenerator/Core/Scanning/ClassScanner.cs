@@ -7,7 +7,7 @@ public class ClassScanner
 {
     public static TreeItemViewModel ScanCsClass(ClassDeclarationSyntax classDeclarationSyntax)
     {
-        var classNode = new TreeItemViewModel { Name = classDeclarationSyntax.Identifier.Text, Tag = classDeclarationSyntax };
+        var classNode = new TreeItemViewModel(classDeclarationSyntax.Identifier.Text, classDeclarationSyntax);
 
         foreach (var method in classDeclarationSyntax.Members.OfType<MethodDeclarationSyntax>())
         {
@@ -35,7 +35,8 @@ public class ClassScanner
 
     // TODO: this should use the semantic model
     // TODO: test this method
-    public static MethodDeclarationSyntax? FindMethod(MethodDeclarationSyntax methodDeclarationSyntax, ClassDeclarationSyntax classDeclarationSyntax)
+    public static MethodDeclarationSyntax? FindMethod(MethodDeclarationSyntax methodDeclarationSyntax,
+        ClassDeclarationSyntax classDeclarationSyntax)
     {
         return classDeclarationSyntax.DescendantNodes().OfType<MethodDeclarationSyntax>()
             .FirstOrDefault(m => m.Identifier == methodDeclarationSyntax.Identifier);

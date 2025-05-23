@@ -12,33 +12,19 @@ public class PropertyScanner
         var modifiers = string.Join(" ", propertyDeclarationSyntax.Modifiers.Select(m => m.Text));
         var propLabel = $"{modifiers} {type} {name}".Trim();
 
-        var propNode = new TreeItemViewModel
-        {
-            Name = propLabel,
-            Tag = propertyDeclarationSyntax // full property
-        };
+        var propNode = new TreeItemViewModel(propLabel, propertyDeclarationSyntax);
 
         if (propertyDeclarationSyntax.ExpressionBody != null)
         {
-            propNode.Children.Add(new TreeItemViewModel
-            {
-                Name = "get (expression-bodied)",
-                Tag = "get"
-            });
+            propNode.Children.Add(new TreeItemViewModel("get (expression-bodied)", "get"));
             return propNode;
         }
 
         if (propertyDeclarationSyntax.AccessorList == null) return propNode;
 
-        foreach (var accessorNode in propertyDeclarationSyntax.AccessorList.Accessors.Select(accessor => new TreeItemViewModel
-                 {
-                     Name = accessor.Keyword.Text,
-                     Tag = accessor,
-                     Parent = propNode
-                 }))
-        {
+        foreach (var accessorNode in propertyDeclarationSyntax.AccessorList.Accessors.Select(accessor =>
+                     new TreeItemViewModel(accessor.Keyword.Text, accessor) { Parent = propNode }))
             propNode.Children.Add(accessorNode);
-        }
 
         return propNode;
     }

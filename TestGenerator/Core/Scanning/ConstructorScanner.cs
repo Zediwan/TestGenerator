@@ -7,7 +7,8 @@ public class ConstructorScanner
 {
     public static TreeItemViewModel ScanCsConstructor(ConstructorDeclarationSyntax constructorDeclarationSyntax)
     {
-        return new TreeItemViewModel { Name = GetFormattedConstructorSignature(constructorDeclarationSyntax), Tag = constructorDeclarationSyntax};
+        return new TreeItemViewModel(GetFormattedConstructorSignature(constructorDeclarationSyntax),
+            constructorDeclarationSyntax);
     }
 
     private static string GetFormattedConstructorSignature(ConstructorDeclarationSyntax ctor)

@@ -1,21 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.IO;
-using System.Linq;
 
 namespace TestGenerator.Core.Common.Models;
 
-public class TreeItemViewModel : INotifyPropertyChanged
+public class TreeItemViewModel(string name, object tag) : INotifyPropertyChanged
 {
     private bool _isChecked;
+    private bool _isInternalChange;
 
-    public string Name { get; set; }
-    public object Tag { get; set; }
+    public string Name { get; set; } = name;
+    public object Tag { get; set; } = tag;
     public TreeItemViewModel? Parent { get; set; }
     public ObservableCollection<TreeItemViewModel> Children { get; set; } = [];
-    private bool _isInternalChange = false;
+
     public bool IsChecked
     {
         get => _isChecked;
@@ -28,12 +28,8 @@ public class TreeItemViewModel : INotifyPropertyChanged
 
             // Only propagate to children if this is a direct user action (not from a child)
             if (!_isInternalChange)
-            {
                 foreach (var child in Children)
-                {
                     child.IsChecked = value;
-                }
-            }
 
             // Upward: only update parent, do not propagate to siblings
             if (Parent == null) return;
@@ -69,9 +65,13 @@ public class TreeItemViewModel : INotifyPropertyChanged
         _ => ""
     };
 
+
     public event PropertyChangedEventHandler? PropertyChanged;
+
     protected void OnPropertyChanged([CallerMemberName] string? name = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
 
     public bool SelfOrAnyChildrenSelected()
     {

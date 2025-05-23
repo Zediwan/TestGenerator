@@ -10,13 +10,6 @@ namespace TestGenerator.UI;
 // TODO: rework the UI handling methods with bindings
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? name = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-    public bool CanGenerate =>
-        !string.IsNullOrEmpty(TestsFolderPath.Text) && ProjectOverview.AnyItemSelected;
-
     public MainWindow()
     {
         InitializeComponent();
@@ -24,14 +17,21 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         ProjectOverview.AnyItemSelectedChanged += (s, e) => OnPropertyChanged(nameof(CanGenerate));
     }
 
+    public bool CanGenerate =>
+        !string.IsNullOrEmpty(TestsFolderPath.Text) && ProjectOverview.AnyItemSelected;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string? name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
     private void SelectSourceFolder_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new FolderBrowserDialog();
 
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        {
-            SrcFolderPath.Text = dialog.SelectedPath;
-        }
+        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) SrcFolderPath.Text = dialog.SelectedPath;
 
         ScanButton.IsEnabled = !string.IsNullOrEmpty(SrcFolderPath.Text);
     }
@@ -79,7 +79,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         var generator = new Generator(path, SrcFolderPath.Text)
         {
-            FileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path, SrcFolderPath.Text),
+            FileGenerator = new FileGenerator(TestSchema.FilePrefix.Text, TestSchema.FileSuffix.Text, path,
+                SrcFolderPath.Text)
         };
 
         var items = ProjectOverview.GetCheckedItems(ProjectOverview.TreeItems);
@@ -91,9 +92,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         var dialog = new FolderBrowserDialog();
 
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        {
-            TestsFolderPath.Text = dialog.SelectedPath;
-        }
+        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) TestsFolderPath.Text = dialog.SelectedPath;
     }
 }

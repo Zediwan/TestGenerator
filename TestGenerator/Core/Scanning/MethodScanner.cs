@@ -7,7 +7,7 @@ public class MethodScanner
 {
     public static TreeItemViewModel ScanCsMethod(MethodDeclarationSyntax methodDeclarationSyntax)
     {
-        return new TreeItemViewModel { Name = GetFormattedMethodSignature(methodDeclarationSyntax), Tag = methodDeclarationSyntax };
+        return new TreeItemViewModel(GetFormattedMethodSignature(methodDeclarationSyntax), methodDeclarationSyntax);
     }
 
     private static string GetFormattedMethodSignature(MethodDeclarationSyntax methodDeclarationSyntax)
