@@ -12,7 +12,7 @@
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type local:TreeItemViewModel}" ItemsSource="{Binding Children}">
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="OnCheckboxToggled" Unchecked="OnCheckboxToggled">
+                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Icon}" FontFamily="Segoe MDL2 Assets" Margin="0,2.5,5,0"/>
                                     <TextBlock Text="{Binding Name}" />

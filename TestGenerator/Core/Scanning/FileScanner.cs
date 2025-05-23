@@ -23,7 +23,11 @@ public static class FileScanner
         var fileNode = new TreeItemViewModel { Name = file.Name, Tag = parsedFile };
 
         foreach (var cls in parsedFile.Classes)
-            fileNode.Children.Add(ClassScanner.ScanCsClass(cls));
+        {
+            var child = ClassScanner.ScanCsClass(cls);
+            child.Parent = fileNode;
+            fileNode.Children.Add(child);
+        }
 
         return fileNode;
     }

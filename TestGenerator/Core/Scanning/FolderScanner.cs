@@ -14,13 +14,17 @@ public static class FolderScanner
         foreach (var dir in directoryInfo.GetDirectories())
         {
             var child = ScanRecursively(dir);
-            if (child != null)
-                rootItem.Children.Add(child);
+            if (child == null) continue;
+
+            child.Parent = rootItem;
+            rootItem.Children.Add(child);
         }
 
         foreach (var file in directoryInfo.GetFiles("*.cs"))
         {
-            rootItem.Children.Add(FileScanner.ScanCsFile(file));
+            var child = FileScanner.ScanCsFile(file);
+            child.Parent = rootItem;
+            rootItem.Children.Add(child);
         }
 
         return rootItem.Children.Any() ? [rootItem] : [];
@@ -35,14 +39,18 @@ public static class FolderScanner
         foreach (var subDir in dir.GetDirectories())
         {
             var child = ScanRecursively(subDir);
-            if (child != null)
-                dirItem.Children.Add(child);
+            if (child == null) continue;
+
+            child.Parent = dirItem;
+            dirItem.Children.Add(child);
         }
 
         // Add .cs files in the current directory
         foreach (var file in dir.GetFiles("*.cs"))
         {
-            dirItem.Children.Add(FileScanner.ScanCsFile(file));
+            var child = FileScanner.ScanCsFile(file);
+            child.Parent = dirItem;
+            dirItem.Children.Add(child);
         }
 
         // Only return this directory if it has children (either subfolders or files)

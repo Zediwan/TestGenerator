@@ -11,19 +11,24 @@ public class ClassScanner
 
         foreach (var method in cls.Members.OfType<MethodDeclarationSyntax>())
         {
-            classNode.Children.Add(MethodScanner.ScanCsMethod(method));
+            var child = MethodScanner.ScanCsMethod(method);
+            child.Parent = classNode;
+            classNode.Children.Add(child);
         }
 
         foreach (var property in cls.Members.OfType<PropertyDeclarationSyntax>())
         {
-            classNode.Children.Add(PropertyScanner.ScanCsProperty(property));
+            var child = PropertyScanner.ScanCsProperty(property);
+            child.Parent = classNode;
+            classNode.Children.Add(child);
         }
 
         foreach (var constructor in cls.Members.OfType<ConstructorDeclarationSyntax>())
         {
-            classNode.Children.Add(ConstructorScanner.ScanCsClass(constructor));
+            var child = ConstructorScanner.ScanCsConstructor(constructor);
+            child.Parent = classNode;
+            classNode.Children.Add(child);
         }
-
 
         return classNode;
     }

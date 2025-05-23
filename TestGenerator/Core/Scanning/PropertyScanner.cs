@@ -30,14 +30,13 @@ public class PropertyScanner
 
         if (prop.AccessorList == null) return propNode;
 
-        foreach (var accessor in prop.AccessorList.Accessors)
+        foreach (var accessorNode in prop.AccessorList.Accessors.Select(accessor => new TreeItemViewModel
+                 {
+                     Name = accessor.Keyword.Text,
+                     Tag = accessor,
+                     Parent = propNode
+                 }))
         {
-            var accessorNode = new TreeItemViewModel
-            {
-                Name = accessor.Keyword.Text,
-                Tag = accessor // could be string like "get" or actual Syntax
-            };
-
             propNode.Children.Add(accessorNode);
         }
 

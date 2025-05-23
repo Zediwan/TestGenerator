@@ -3,18 +3,20 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;
+using System.Linq;
 
 namespace TestGenerator.Core.Common.Models;
 
 public class TreeItemViewModel : INotifyPropertyChanged
 {
-    private bool? _isChecked = false;
+    private bool _isChecked;
 
     public string Name { get; set; }
     public object Tag { get; set; }
+    public TreeItemViewModel? Parent { get; set; }
     public ObservableCollection<TreeItemViewModel> Children { get; set; } = [];
-
-    public bool? IsChecked
+    private bool _isInternalChange = false;
+    public bool IsChecked
     {
         get => _isChecked;
         set
@@ -24,9 +26,35 @@ public class TreeItemViewModel : INotifyPropertyChanged
             _isChecked = value;
             OnPropertyChanged();
 
-            // Cascade to children
-            foreach (var child in Children)
-                child.IsChecked = value;
+            // Only propagate to children if this is a direct user action (not from a child)
+            if (!_isInternalChange)
+            {
+                foreach (var child in Children)
+                {
+                    child._isInternalChange = true;
+                    child.IsChecked = value;
+                    child._isInternalChange = false;
+                }
+            }
+
+            // Upward: only update parent, do not propagate to siblings
+            if (Parent == null) return;
+
+            Parent._isInternalChange = true;
+            if (value)
+            {
+                // If all siblings are checked, check the parent
+                if (Parent.Children.All(c => c.IsChecked))
+                    Parent.IsChecked = true;
+            }
+            else
+            {
+                // Always uncheck the parent if any child is unchecked
+                if (Parent.IsChecked)
+                    Parent.IsChecked = false;
+            }
+
+            Parent._isInternalChange = false;
         }
     }
 
@@ -44,6 +72,6 @@ public class TreeItemViewModel : INotifyPropertyChanged
     };
 
     public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
