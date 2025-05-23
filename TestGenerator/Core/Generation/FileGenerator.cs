@@ -36,6 +36,8 @@ public class FileGenerator(string prefix, string suffix, string pathToTestRootFo
 
         // Ensure the directory exists
         var directoryName = Path.GetDirectoryName(filePath);
+        if (directoryName == null)
+            throw new InvalidOperationException("The directory name could not be determined. Ensure the file path is not a root path.");
         if (!Directory.Exists(directoryName))
         {
             MessageBox.Show("Directory has been created at: " + directoryName);
