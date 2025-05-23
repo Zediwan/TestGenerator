@@ -32,12 +32,48 @@ public partial class ProjectOverview
         TreeItems.Clear();
     }
 
-    private void OnCheckboxToggled(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// Recursively retrieves all top-level checked items from a tree structure.
+    /// <para>
+    /// Only explicitly checked nodes are returned. If a node is checked, its children
+    /// are not included even if they are also checked.
+    /// </para>
+    /// <para>
+    /// If a node is unchecked but some of its children are checked, only those children are returned.
+    /// </para>
+    /// <para>
+    /// Example tree:
+    /// <code>
+    /// Root
+    /// ├─ A (checked)
+    /// │  ├─ A1 (checked)
+    /// │  └─ A2 (checked)
+    /// ├─ B (unchecked)
+    /// │  ├─ B1 (checked)
+    /// │  └─ B2 (unchecked)
+    /// └─ C (checked)
+    ///     ├─ C1 (checked)
+    ///     └─ C2 (checked)
+    /// </code>
+    /// Returns: [A, B1, C]
+    /// </para>
+    /// </summary>
+    public static List<TreeItemViewModel> GetCheckedItems(IEnumerable<TreeItemViewModel> items)
     {
-        var checkbox = sender as System.Windows.Controls.CheckBox;
-        if (checkbox?.DataContext is not TreeItemViewModel currentItem) return;
+        var selectedItems = new List<TreeItemViewModel>();
 
-        foreach (var child in currentItem.Children)
-            child.IsChecked = currentItem.IsChecked;
+        foreach (var item in items)
+        {
+            if (item.IsChecked == true)
+                selectedItems.Add(item);
+            else
+            {
+                // Recursively check child items
+                if (item.Children.Any())
+                    selectedItems.AddRange(GetCheckedItems(item.Children));
+            }
+        }
+
+        return selectedItems;
     }
 }
