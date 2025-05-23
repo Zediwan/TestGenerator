@@ -27,13 +27,13 @@ public static class FileScanner
     // TODO: test this method
     public static MethodDeclarationSyntax? FindMethod(MethodDeclarationSyntax methodDeclarationSyntax, ParsedFile parsedFile)
     {
-        return parsedFile.Methods.FirstOrDefault(m => m.Identifier == methodDeclarationSyntax.Identifier); ;
+        return parsedFile.Methods.FirstOrDefault(m => m.Identifier.Text == methodDeclarationSyntax.Identifier.Text); ;
     }
 
     // TODO: this should use the semantic model
     // TODO: test this method
     public static ClassDeclarationSyntax? FindClass(ClassDeclarationSyntax classDeclarationSyntax, ParsedFile parsedFile)
     {
-        return parsedFile.Classes.FirstOrDefault(c => c.Identifier == classDeclarationSyntax.Identifier);
+        return parsedFile.Classes.FirstOrDefault(c => c.Identifier.Text == classDeclarationSyntax.Identifier.Text);
     }
 }
