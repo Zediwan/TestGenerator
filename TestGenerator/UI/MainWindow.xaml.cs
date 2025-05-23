@@ -77,7 +77,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             return;
         }
 
-        TestSchema.CheckSchema();
+        if (!TestSchema.CheckSchema())
+        {
+            MessageBox.Show(
+                "Schema validation failed. Please check your configuration and try again.",
+                "Validation Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
+        }
 
         #region Generators
 
