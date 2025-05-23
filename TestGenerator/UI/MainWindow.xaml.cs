@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using TestGenerator.Core.Generation;
+using MessageBox = System.Windows.MessageBox;
 
 namespace TestGenerator.UI;
 
@@ -41,11 +42,11 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         if (!Directory.Exists(path))
         {
-            System.Windows.Forms.MessageBox.Show(
+            MessageBox.Show(
                 $"Invalid folder path: {path}",
                 "Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
 
@@ -68,11 +69,11 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         var path = TestsFolderPath.Text;
         if (!Directory.Exists(path))
         {
-            System.Windows.Forms.MessageBox.Show(
+            MessageBox.Show(
                 $"Invalid folder path: {path}",
                 "Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
 
